@@ -3,8 +3,7 @@ prefs_file=".rsink/prefs"
 
 function prefs {
     first=1
-    cat $prefs_file | \
-    while read line; do
+    cat $prefs_file | while read line; do
         if [[ ${#line} == 1 ]]; then # single letter options
             if [[ $first == 1 ]]; then
                 echo -n " -$line"
@@ -13,6 +12,7 @@ function prefs {
                 echo -n "$line"
             fi
         else # longer options
+            first=1
             echo -n " --$line"
         fi
     done
@@ -38,3 +38,5 @@ function main {
         echo $cmd
     done
 }
+
+main

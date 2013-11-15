@@ -28,5 +28,3 @@ ignore-existing
 delete-excluded
 
 ```
-
-* The single letter options and the longer options must be grouped together. There is no specific order for the grouping.
