@@ -10,6 +10,7 @@ The `config` file provides instructions for `rsync` on the source and destinatio
 
 ```
 source desintation exclude1 exclude2 ...
+
 ```
 
 * There can be 0 or more excludes.
@@ -25,6 +26,7 @@ a
 E
 ignore-existing
 delete-excluded
+
 ```
 
-* The single letter options and the longer options must be grouped together.
+* The single letter options and the longer options must be grouped together. There is no specific order for the grouping.
