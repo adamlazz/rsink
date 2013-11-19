@@ -18,8 +18,8 @@ source desintation exclude1 exclude2 ...
 ```
 
 * There can be 0 or more excludes.
-* There must be a new line at the end of the `config` file.
 * There are space characters between the tokens in each line.
+* There must be a new line at the end of the `config` file.
 
 ## prefs file
 
@@ -33,7 +33,7 @@ delete-excluded
 
 ```
 
-# crontab
+## crontab
 
 The crontab schedules jobs to be run automatically. To add `rsink.sh` to crontab, run `crontab -e` in a terminal. Add this line to the file:
 
