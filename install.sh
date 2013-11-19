@@ -10,3 +10,7 @@ mv rsink.sh /usr/bin/local
 # change .samples to real config files??
 mv ~/.rsink/config.sample ~/.rsink/config
 mv ~/.rsink/prefs.sample ~/.rsink/prefs
+
+# clean up
+cd ..
+rm rsink
