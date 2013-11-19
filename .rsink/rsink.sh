@@ -1,5 +1,5 @@
-config_file=".rsink/config"
-prefs_file=".rsink/prefs"
+config_file="config"
+prefs_file="prefs"
 
 function prefs {
     first=1
