@@ -30,12 +30,13 @@ function main {
             counter=$(($counter+1))
             if [[ $counter -le 2 ]]; then # source and destination
                 cmd+=" $p"
-            else # exclude
+            else # excludes
                 cmd+=" --exclude='$p'"
             fi
         done
         counter=0
         echo $cmd
+        eval $cmd
     done
 }
 
