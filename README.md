@@ -6,7 +6,11 @@ In order to run `rsink.sh` you must set up your `.rsink/` directory. Inside this
 
 ## Installation
 
-To install `rsink.sh`, open a terminal window in your home directory and run the command: `git clone ______` Then, `cd rsink; chmod +x install.sh; ./install.sh`
+To install `rsink.sh`, open a terminal window and run the command: 
+
+```
+cd; git clone ______; cd rsink; chmod +x install.sh; ./install.sh`
+```
 
 ## config file
 
