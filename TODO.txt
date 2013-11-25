@@ -1,9 +1,11 @@
 # TODO
 
-* device detection - is there a hard drive connected - if not, don't execute... rsync creates the directory.. ANY EXTERNAL LOCATION
 * better way to test? small test drives
+
+* Better place for shell script? do people put shell script in path?
 
 * multi platform support (linux v darwin cases)
 * look through other program
+    * special device detection? mount
     * error handling
     * free space detection
