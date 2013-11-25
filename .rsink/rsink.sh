@@ -1,9 +1,9 @@
 config_file="config"
-prefs_file="prefs"
+profiles_directory="profiles"
 
-function prefs {
+prefs() {
     first=1
-    cat $prefs_file | while read line; do
+    cat $profiles_directory/$1| while read line; do
         if [[ ${#line} == 1 ]]; then # single letter options
             if [[ $first == 1 ]]; then
                 echo -n " -$line"
@@ -15,6 +15,7 @@ function prefs {
             first=1
             echo -n " --$line"
         fi
+
     done
 }
 
@@ -24,19 +25,20 @@ function main {
     while read line; do
         counter=0
         cmd=$synccommand
-        cmd+=$(prefs)
+        profile=$(echo $line | awk '{print $1;}') # get first word of $line
+        cmd+=$(prefs $profile)
 
         for p in $(echo $line | tr " " " ") ; do 
             counter=$(($counter+1))
-            if [[ $counter -le 2 ]]; then # source and destination
+            if [[ $counter -ge 2 && $counter -le 3 ]]; then # source and destination
                 cmd+=" $p"
-            else # excludes
+            elif [[ $counter -ge 4 ]]; then
                 cmd+=" --exclude='$p'"
             fi
         done
         counter=0
         echo $cmd
-        eval $cmd
+        #eval $cmd
     done
 }
 

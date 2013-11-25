@@ -1,2 +1,2 @@
-~/Movies /Volumes/MAXTOR/
-~/Music /Volumes/MAXTOR/ Podcasts
+dump ~/Movies /Volumes/MAXTOR/
+sync ~/Music /Volumes/MAXTOR/ Podcasts
