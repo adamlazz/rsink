@@ -2,14 +2,16 @@
 
 A backup utility for external hard drives that uses rsync.
 
-In order to run `rsink.sh` you must set up your `.rsink/` directory. Inside this directory, there is a config file where your sources and destinations are listed. There is also a `profiles/` directory, where you can manage settings for different backup schemes.
+In order to run `rsink.sh` you must set up your `.rsink/` directory. Inside this directory, there is a config file where your sources and destinations are listed. There is also a `profiles` directory, where you can manage settings for different backup schemes.
+
+Refer to the To Do [wiki page] [1] for ideas on how you can help contribute to rsink.
 
 ## Installation
 
 To install `rsink.sh`, open a terminal window and run the command: 
 
 ```
-cd; git clone ______; cd rsink; chmod +x install.sh; ./install.sh`
+git clone https://github.com/adamlazz/rsink.git; cd rsink; chmod +x install.sh; ./install.sh`
 ```
 
 ## Configuration
@@ -27,7 +29,7 @@ profile source desintation exclude1 exclude2 ...
 
 ## Profiles
 
-The `profiles/` directory contains files that separate the 
+The `profiles` directory contains files that separate the 
 
 Each profile file contains a list of options that rsync uses. For example, the `sink` profile uses rsync archive mode (`-a`) and lists the following options:
 
@@ -38,6 +40,12 @@ ignore-existing
 E
 
 ```
+
+`rsink.sh` also comes with a `sync` profile to sync sources and destinations.  
+
+* For a full list of options run `man rsync`.
+* You can name the profiles whatever you want.
+* There must be a new line at the end of each profile file.
 
 ## Automation
 
@@ -54,4 +62,7 @@ Where:
 * 4: Month (0-12) (December is 12)
 * 5: Day of the week (0-7) (Sunday is 0 or 7)
 
-Read more about crontab here: http://unixhelp.ed.ac.uk/CGI/man-cgi?crontab+5
+Read more about crontab [here] [2].
+
+[1]: https://github.com/adamlazz/rsink/wiki/To-Do
+[2]: http://unixhelp.ed.ac.uk/CGI/man-cgi?crontab+5

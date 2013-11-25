@@ -2,8 +2,9 @@ config_file="config"
 profiles_directory="profiles"
 
 prefs() {
-    first=1
+    detect_file $profiles_directory/$1
 
+    first=1
     cat $profiles_directory/$1 | while read line; do
         if [[ ${#line} == 1 ]]; then # single letter options
             if [[ $first == 1 ]]; then
@@ -19,9 +20,21 @@ prefs() {
     done
 }
 
-detect() {
-    if [[ ! mount | grep -q $1 ]]; then
-        fail $1 "Hard drive not connected."
+detect_file() {
+    if [[ ! -f $1 ]]; then
+       fail $1 "File does not exist."
+    fi
+}
+
+detect_dir() {
+    if [[ ! -d $1 ]]; then
+       fail $1 "Directory does not exist."
+    fi
+}
+
+detect_hd() {
+    if [[ ! $(mount | grep -q $1) ]]; then
+        fail $1 "Hard drive not mounted."
     fi
 }
 
@@ -32,28 +45,31 @@ fail() {
 }
 
 main() {
-    synccommand="rsync"
+    detect_file $config_file
+    detect_dir $profiles_directory
 
     cat $config_file | while read line; do
-        counter=0
-        cmd=$synccommand
+        token=0
+        cmd="rsync"
 
         for p in $(echo $line | tr " " " "); do
-            counter=$(($counter+1))
+            token=$(($token+1))
 
-            if [[ $counter == 1 ]]; then # profile
+            if [[ $token == 1 ]]; then # profile
                 profile=$(echo $p | awk '{print $1;}') # get first word of $line
                 cmd+=$(prefs $profile)
-            elif [[ $counter -ge 2 && $counter -le 3 ]]; then # source and destination
-                if [[ $counter == 3 ]]; then # destination
-                    detect $p
+            elif [[ $token -ge 2 && $token -le 3 ]]; then # source and destination
+                if [[ $token == 2 ]]; then # source
+                    detect_dir $p
+                elif [[ $token == 3 ]]; then # destination
+                    detect_hd $p
                 fi
                 cmd+=" $p"
-            elif [[ $counter -ge 4 ]]; then
+            elif [[ $token -ge 4 ]]; then
                 cmd+=" --exclude='$p'"
             fi
         done
-        counter=0
+        token=0
         echo $cmd
         eval $cmd
     done
