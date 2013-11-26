@@ -41,28 +41,10 @@ E
 
 ```
 
-`rsink.sh` also comes with a `sync` profile to sync sources and destinations.  
+`rsink.sh` also comes with a `sync` profile for a source to destination sync. Files no longer on the source will be deleted from the destination. 
 
 * For a full list of options run `man rsync`.
 * You can name the profiles whatever you want.
 * There must be a new line at the end of each profile file.
 
-## Automation
-
-`crontab` schedules jobs to be run automatically. To add `rsink.sh` to crontab, run `crontab -e` in a terminal. Add this line to the file:
-
-```
-1 2 3 4 5 ~/.rsink/rsink.sh
-```
-
-Where:
-* 1: Minute (0-59)
-* 2: Hour (0-23)
-* 3: Day (0-31)
-* 4: Month (0-12) (December is 12)
-* 5: Day of the week (0-7) (Sunday is 0 or 7)
-
-Read more about crontab [here] [2].
-
 [1]: https://github.com/adamlazz/rsink/wiki/To-Do
-[2]: http://unixhelp.ed.ac.uk/CGI/man-cgi?crontab+5
