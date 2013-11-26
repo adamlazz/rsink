@@ -1,4 +1,4 @@
-config_file="config"
+config_file="config.sample"
 profiles_directory="profiles"
 
 prefs() {
@@ -18,6 +18,12 @@ prefs() {
             echo -n " --$line"
         fi
     done
+}
+
+detect_x() {
+    if [[ (! -f $1) && (! -d $1) ]]; then
+        fail $1 "File or directory does not exist."
+    fi
 }
 
 detect_file() {
@@ -60,8 +66,8 @@ main() {
                 cmd+=$(prefs $profile)
             elif [[ $token -ge 2 && $token -le 3 ]]; then # source and destination
                 if [[ $token == 2 ]]; then # source
-                    detect_dir $p
-                elif [[ $token == 3 ]]; then # destination
+                    detect_x $p
+                elif [[ $token == 3 ]]; then # destination volume
                     detect_hd $p
                 fi
                 cmd+=" $p"
