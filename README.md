@@ -23,15 +23,14 @@ profile source desintation exclude1 exclude2 ...
 
 ```
 
+* If the source folder does not exist on the destination, it will be created.
 * There can be 0 or more excludes.
 * There are space characters between the tokens in each line.
 * There must be a new line at the end of the `config` file.
 
 ## Profiles
 
-The `profiles` directory contains files that separate the 
-
-Each profile file contains a list of options that rsync uses. For example, the `sink` profile uses rsync archive mode (`-a`) and lists the following options:
+The `profiles` directory contains files that create different sets of options for rsync to use. The profile name is the name of the file. For example, the `sink` profile uses rsync archive mode (`-a`) and lists the following options:
 
 ```
 progress
