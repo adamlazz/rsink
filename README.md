@@ -1,6 +1,6 @@
 # rsink.sh
 
-A backup utility for external hard drives that uses rsync.
+A backup utility for external hard drives that uses `rsync`.
 
 In order to run `rsink.sh` you must set up your `.rsink/` directory. Inside this directory, there is a config file where your sources and destinations are listed. There is also a `profiles` directory, where you can manage settings for different backup schemes.
 

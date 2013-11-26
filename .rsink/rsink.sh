@@ -33,7 +33,7 @@ detect_dir() {
 }
 
 detect_hd() {
-    if [[ ! $(mount | grep -q $1) ]]; then
+    if [[ ! $(mount | grep $1) ]]; then
         fail $1 "Hard drive not mounted."
     fi
 }
