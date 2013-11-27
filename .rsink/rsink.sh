@@ -1,4 +1,4 @@
-config_file="config.sample"
+config_file="config"
 profiles_directory="profiles"
 
 prefs() {
