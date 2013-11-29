@@ -1,4 +1,4 @@
-progress
-a
+progress:shows the progress
+a:archive
 ignore-existing
-E
+E:preserve executability

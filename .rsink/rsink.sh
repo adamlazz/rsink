@@ -4,18 +4,19 @@ profiles_directory="profiles"
 prefs() {
     detect_file $profiles_directory/$1
 
-    first=1
+    first=1 # first single character option (add -)
     cat $profiles_directory/$1 | while read line; do
-        if [[ ${#line} == 1 ]]; then # single letter options
+        option=$(echo $line | cut -d \: -f 1)
+        if [[ ${#option} == 1 ]]; then # single letter options
             if [[ $first == 1 ]]; then
-                echo -n " -$line"
                 first=0
+                echo -n " -$option"
             else
-                echo -n "$line"
+                echo -n "$option"
             fi
         else # longer options
             first=1
-            echo -n " --$line"
+            echo -n " --$option"
         fi
     done
 }

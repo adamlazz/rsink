@@ -33,10 +33,10 @@ profile source desintation exclude1 exclude2 ...
 The `profiles` directory contains files that create different sets of options for rsync to use. The profile name is the name of the file. For example, the `sink` profile uses rsync archive mode (`-a`) and lists the following options:
 
 ```
-progress
-a
+progress:shows transfer progress
+a:archive mode
 ignore-existing
-E
+E:preserve executability
 
 ```
 
@@ -44,6 +44,7 @@ E
 
 * For a full list of options run `man rsync`.
 * You can name the profiles whatever you want.
+* Only the first token of each line is read. You are able to add comments after the argument by separating the command and comment with a colon character as shown above.
 * There must be a new line at the end of each profile file.
 
 [1]: https://github.com/adamlazz/rsink/wiki/To-Do
