@@ -19,11 +19,13 @@ git clone https://github.com/adamlazz/rsink.git; cd rsink; chmod +x install.sh; 
 The `config` file provides instructions for `rsync` on the source and destinations of your backups. Each line of the file is formatted like so:
 
 ```
-profile source desintation exclude1 exclude2 ...
+profile source desintation_drive destination_folder exclude1 exclude2 ...
 
 ```
 
 * If the source folder does not exist on the destination, it will be created.
+* Don't include `/` characters at the end of tokens.
+* Destination folders can be `.` for root of drive.
 * There can be 0 or more excludes.
 * There are space characters between the tokens in each line.
 * There must be a new line at the end of the `config` file.

@@ -14,7 +14,7 @@ prefs() {
             else
                 echo -n "$option"
             fi
-        else # longer options
+        else # longer options (add --)
             first=1
             echo -n " --$option"
         fi
@@ -72,7 +72,11 @@ main() {
                     detect_hd $p
                 fi
                 cmd+=" $p"
-            elif [[ $token -ge 4 ]]; then
+            elif [[ $token == 4 ]]; then # destination folder
+                if [[ "$p" != "." ]]; then
+                    cmd+="/$p"
+                fi
+            elif [[ $token -ge 5 ]]; then
                 cmd+=" --exclude='$p'"
             fi
         done
