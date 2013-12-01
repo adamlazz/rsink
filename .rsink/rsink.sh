@@ -5,7 +5,7 @@ prefs() {
     detect_file $profiles_directory/$1
 
     first=1 # first single character option (add -)
-    cat $profiles_directory/$1 | while read line; do
+    cat $profiles_directory/$1 | while read -r line || [[ -n "$line" ]]; do
         option=$(echo $line | cut -d \: -f 1)
         if [[ ${#option} == 1 ]]; then # single letter options
             if [[ $first == 1 ]]; then
@@ -41,7 +41,8 @@ detect_dir() {
 
 detect_hd() {
     if [[ ! $(mount | grep $1) ]]; then
-        fail $1 "Hard drive not mounted."
+        echo "duh"
+        #fail $1 "Hard drive not mounted."
     fi
 }
 
@@ -55,7 +56,7 @@ main() {
     detect_file $config_file
     detect_dir $profiles_directory
 
-    cat $config_file | while read line; do
+    cat $config_file | while read line || [[ -n "$line" ]]; do
         token=0
         cmd="rsync"
 
@@ -82,7 +83,7 @@ main() {
         done
         token=0
         echo $cmd
-        eval $cmd
+        #eval $cmd
     done
 }
 

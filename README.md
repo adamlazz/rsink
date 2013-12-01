@@ -20,7 +20,6 @@ The `config` file provides instructions for `rsync` on the source and destinatio
 
 ```
 profile source desintation_drive destination_folder exclude1 exclude2 ...
-
 ```
 
 * If the source folder does not exist on the destination, it will be created.
@@ -39,7 +38,6 @@ progress:shows transfer progress
 a:archive mode
 ignore-existing
 E:preserve executability
-
 ```
 
 `rsink.sh` also comes with a `sync` profile for a source to destination sync. Files no longer on the source will be deleted from the destination. 
