@@ -41,8 +41,7 @@ detect_dir() {
 
 detect_hd() {
     if [[ ! $(mount | grep $1) ]]; then
-        echo "duh"
-        #fail $1 "Hard drive not mounted."
+        fail $1 "Hard drive not mounted."
     fi
 }
 
@@ -83,7 +82,7 @@ main() {
         done
         token=0
         echo $cmd
-        #eval $cmd
+        eval $cmd
     done
 }
 
