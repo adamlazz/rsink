@@ -27,7 +27,6 @@ profile source desintation_drive destination_folder exclude1 exclude2 ...
 * Destination folders can be `.` for root of drive.
 * There can be 0 or more excludes.
 * There are space characters between the tokens in each line.
-* There must be a new line at the end of the `config` file.
 
 ## Profiles
 
@@ -45,6 +44,5 @@ E:preserve executability
 * For a full list of options run `man rsync`.
 * You can name the profiles whatever you want.
 * Only the first token of each line is read. You are able to add comments after the argument by separating the command and comment with a colon character as shown above.
-* There must be a new line at the end of each profile file.
 
 [1]: https://github.com/adamlazz/rsink/wiki/To-Do
