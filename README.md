@@ -2,9 +2,9 @@
 
 A backup utility for external hard drives that uses `rsync`.
 
-In order to run `rsink.sh` you must set up your `.rsink/` directory. Inside this directory, there is a config file where your sources and destinations are listed. There is also a `profiles` directory, where you can manage settings for different backup schemes.
+In order to run `rsink.sh` you must set up your `.rsink` directory. Inside this directory, there is a config file where your sources and destinations are listed. There is also a `profiles` directory, where you can manage settings for different backup schemes.
 
-Refer to the To Do [wiki page] [1] for ideas on how you can help contribute to rsink.
+Refer to the To Do [wiki page] [1] for ideas on how you can help contribute to `rsink.sh`.
 
 ## Installation
 
@@ -30,11 +30,11 @@ profile source desintation_drive destination_folder exclude1 exclude2 ...
 
 ## Profiles
 
-The `profiles` directory contains files that create different sets of options for rsync to use. The profile name is the name of the file. For example, the `sink` profile uses rsync archive mode (`-a`) and lists the following options:
+The `profiles` directory contains files that create different sets of options for rsync to use. The profile name is the name of the file. For example, the `sink` profile uses rsync archive mode (`-a`) to dump new files onto the destination. It also uses the following options:
 
 ```
-progress:shows transfer progress
 a:archive mode
+progress:shows transfer progress
 ignore-existing
 E:preserve executability
 ```
@@ -43,6 +43,6 @@ E:preserve executability
 
 * For a full list of options run `man rsync`.
 * You can name the profiles whatever you want.
-* Only the first token of each line is read. You are able to add comments after the argument by separating the command and comment with a colon character as shown above.
+* You are able to add comments after the argument by separating the command and comment with a colon character as shown above.
 
 [1]: https://github.com/adamlazz/rsink/wiki/To-Do
