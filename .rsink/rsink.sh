@@ -32,7 +32,7 @@ fail() {
     exit
 }
 
-prefs() {
+profile() {
     detect_x "f" $profiles_directory/$1
 
     first=1 # first single character option (add -)
@@ -66,7 +66,7 @@ main() {
 
             if [[ $token == 1 ]]; then # profile
                 profile=$(echo $p | awk '{print $1;}') # get first word of $line
-                cmd+=$(prefs $profile)
+                cmd+=$(profile $profile)
             elif [[ $token -ge 2 && $token -le 3 ]]; then # source and destination
                 if [[ $token == 2 ]]; then # source
                     if [[ "$(echo $p | head -c 1)" = "~" ]]; then
