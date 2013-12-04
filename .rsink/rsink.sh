@@ -67,19 +67,19 @@ main() {
             if [[ $token == 1 ]]; then # profile
                 profile=$(echo $p | awk '{print $1;}') # get first word of $line
                 cmd+=$(profile $profile)
-            elif [[ $token -ge 2 && $token -le 3 ]]; then # source and destination
-                if [[ $token == 2 ]]; then # source
-                    if [[ "$(echo $p | head -c 1)" = "~" ]]; then
-                        src=$(echo $p | cut -d '~' -f 2)
-                        src="$HOME$src"
-                    else
-                        src=$p
-                        detect_x "x" $src
-                    fi
-                elif [[ $token == 3 ]]; then # destination volume
-                    detect_x "m" $p
-                    dest=$p
+            elif [[ $token == 2 ]]; then # source
+                if [[ "$(echo $p | head -c 1)" = "~" ]]; then # ~/source/folder
+                    src=$(echo $p | cut -d '~' -f 2)
+                    src="$HOME$src" # /Users/user/source/folder
+                    p=$src
+                else
+                    src=$p
                 fi
+                detect_x "x" $p
+                cmd+=" $p"
+            elif [[ $token == 3 ]]; then # destination volume
+                detect_x "m" $p
+                dest=$p
                 cmd+=" $p"
             elif [[ $token == 4 ]]; then # destination folder
                 if [[ "$p" != "." ]]; then
