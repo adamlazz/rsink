@@ -1,4 +1,4 @@
-a
-progress
-delete
-delete-excluded
+a:archive mode
+progress:show progress
+delete:if deleted on source, then delete on destination
+delete-excluded:delete excluded files from source on destination

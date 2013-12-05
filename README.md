@@ -4,7 +4,7 @@ A backup utility for external hard drives that uses `rsync`.
 
 In order to run `rsink.sh` you must set up your `.rsink` directory. Inside this directory, there is a config file where your sources and destinations are listed. There is also a `profiles` directory, where you can manage settings for different backup schemes.
 
-Refer to the [To Do wiki page] [1] for ideas on how you can help contribute to `rsink.sh`. Also read the [Testing wiki page] [2] on how to test `rsink.sh` without using your personal backup data.
+Refer to the ["To Do" wiki page] [1] for ideas on how you can help contribute to `rsink.sh`. Also read the ["Testing" wiki page] [2] on how to test `rsink.sh` without using your personal backup data.
 
 ## Installation
 
@@ -20,7 +20,7 @@ To run `rsink.sh`, set up your config file and profiles (below) and run:
 cd ~/.rsink/rsink.sh; ./rsink.sh
 ```
 
-You can also use `crontab` to [schedule runs] [3] of `rsink.sh`.
+You can also [automate] [3] `rsink.sh` using `crontab`.
 
 ## Configuration
 

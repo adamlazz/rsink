@@ -34,7 +34,7 @@ detect_x() {
 
 fail() {
     echo $1
-    echo $2
+    echo -e "\033[31m$2\033[0m"
     exit 1
 }
 
@@ -75,16 +75,15 @@ main() {
                 cmd+=$(profile $profile)
             elif [[ $token == 2 ]]; then # source
                 if [[ "$(echo $p | head -c 1)" = "~" ]]; then # ~/source/folder
-                    src=$(echo $p | cut -d '~' -f 2)
-                    p="$HOME$src" # /Users/user/source/folder
-                else
-                    src=$p
+                    p=$(echo $p | cut -d '~' -f 2)
+                    p="$HOME$p" # /Users/user/source/folder
                 fi
+                src=$p
                 detect_x "x" $p
                 cmd+=" $p"
             elif [[ $token == 3 ]]; then # destination volume
-                detect_x "m" $p
                 dest=$p
+                detect_x "m" $p
                 cmd+=" $p"
             elif [[ $token == 4 ]]; then # destination folder
                 if [[ "$p" != "." ]]; then
