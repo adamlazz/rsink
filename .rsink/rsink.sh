@@ -1,6 +1,12 @@
 config_file="config"
 profiles_directory="profiles"
 
+die() { # stop all rsync commands
+    echo "SIGINT - Stopping rsink.sh"
+    exit 1
+}
+trap 'die' SIGINT
+
 detect_x() {
     case $1 in
         "f"*) # file
@@ -29,7 +35,7 @@ detect_x() {
 fail() {
     echo $1
     echo $2
-    exit
+    exit 1
 }
 
 profile() {
@@ -70,8 +76,7 @@ main() {
             elif [[ $token == 2 ]]; then # source
                 if [[ "$(echo $p | head -c 1)" = "~" ]]; then # ~/source/folder
                     src=$(echo $p | cut -d '~' -f 2)
-                    src="$HOME$src" # /Users/user/source/folder
-                    p=$src
+                    p="$HOME$src" # /Users/user/source/folder
                 else
                     src=$p
                 fi
@@ -98,3 +103,4 @@ main() {
 }
 
 main
+exit 0
