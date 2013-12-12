@@ -1,4 +1,4 @@
-# rsink.sh
+# rsink
 
 A backup utility for external hard drives that uses `rsync`.
 
@@ -8,23 +8,23 @@ Refer to the ["To Do" wiki page] [1] for ideas on how you can help contribute to
 
 ## Installation
 
-To install `rsink.sh`, open a terminal window and run the command: 
+To install `rsink`, open a terminal window and run the command: 
 
 ```
-git clone https://github.com/adamlazz/rsink.git; cd rsink; chmod +x install.sh; ./install.sh`
+git clone https://github.com/adamlazz/rsink.git; cd rsink; chmod +x install; ./install`
 ```
 
-To run `rsink.sh`, set up your config file and profiles (below) and run:
+To run `rsink`, set up your config file and profiles (below) and run:
 
 ```
-cd ~/.rsink/rsink.sh; ./rsink.sh
+cd ~/.rsink/rsink; ./rsink
 ```
 
-You can also [automate] [3] `rsink.sh` using `crontab`.
+You can also [automate] [3] `rsink` using `crontab`.
 
 ## Configuration
 
-The `config` file provides instructions for `rsync` on the source and destinations of your backups. Each line of the file is formatted like so:
+The `config` file provides instructions for `rsync` on the sources and destinations of your backups. Each line of the file is formatted like so:
 
 ```
 profile source desintation_drive destination_folder exclude1 exclude2 ...
@@ -38,7 +38,7 @@ profile source desintation_drive destination_folder exclude1 exclude2 ...
 
 ## Profiles
 
-The `profiles` directory contains files that create different sets of options for rsync to use. The profile name is the name of the file. For example, the `sink` profile uses rsync archive mode (`-a`) to dump new files onto the destination. It also uses the following options:
+The `profiles` directory contains files that create different sets of options for rsync to use. The profile name is the name of the file. For example, the `dump` profile uses rsync archive mode (`-a`) to send new files to the destination. It also uses the following options:
 
 ```
 a:archive mode
@@ -47,7 +47,7 @@ ignore-existing
 E:preserve executability
 ```
 
-`rsink.sh` also comes with a `sync` profile for a source to destination sync. Files no longer on the source will be deleted from the destination. 
+`rsink` also comes with a `sync` profile for a source to destination sync. Files no longer on the source will be deleted from the destination. 
 
 * For a full list of options run `man rsync`.
 * You can name the profiles whatever you want.

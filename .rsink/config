@@ -1,2 +1,2 @@
-sink /Users/adaml/Movies /Volumes/MAXTOR .
+dump /Users/adaml/Movies /Volumes/MAXTOR .
 sync /Users/adaml/Music /Volumes/MAXTOR . Podcasts

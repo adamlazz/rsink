@@ -1,4 +1,5 @@
 .DS_Store
 .git
-config.sample
+.vagrant
 destination.dmg
+Vagrantfile

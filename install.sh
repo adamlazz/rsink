@@ -2,7 +2,7 @@
 chmod +x .rsink/rsink.sh
 
 # remove current installation (if it exists)
-rm -fr ~/.rsink
+rm -rf ~/.rsink
 
 # move .rsink to home directory
 mv .rsink/ ~
@@ -10,3 +10,8 @@ mv .rsink/ ~
 # clean up
 cd ..
 rm rsink
+
+echo "Installed rsink to ~/.rsink"
+echo "Press any key to continue."
+read -n 1 c
+exit 0
