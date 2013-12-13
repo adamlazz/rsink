@@ -1,4 +1,5 @@
 #!/bin/sh
+# rsink.sh v0.1
 
 config_file="config"
 profiles_directory="profiles"

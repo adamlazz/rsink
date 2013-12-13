@@ -6,10 +6,16 @@ Refer to the ["To Do" wiki page] [1] for ideas on how you can help contribute to
 
 ## Installation
 
-To install rsink, open a terminal window and run the command: 
+To download and install rsink, open a terminal window and run the command: 
 
 ```
 git clone https://github.com/adamlazz/rsink.git; cd rsink; chmod +x install.sh; ./install.sh
+```
+
+Or, if you downloaded rsink from the [releases] [4] page, unzip the file and run:
+
+```
+cd rsink-x.x; chmod +x install.sh; ./install.sh
 ```
 
 In order to run `rsink.sh` you must set up your `.rsink` directory. Inside this directory, there is a config file where your sources and destinations are listed. There is also a `profiles` directory, where you can manage settings for different backup schemes. Set up your config file and profiles (below) and then run:
@@ -52,3 +58,4 @@ rsink also comes with a `sync` profile for a source to destination sync. Files n
 [1]: https://github.com/adamlazz/rsink/wiki/To-Do
 [2]: https://github.com/adamlazz/rsink/wiki/Testing
 [3]: https://github.com/adamlazz/rsink/wiki/Automation
+[4]: https://github.com/adamlazz/rsink/releases
