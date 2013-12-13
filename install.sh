@@ -1,3 +1,6 @@
+#!/bin/sh
+# install.sh
+
 # add executability permission to rsink.sh
 chmod +x .rsink/rsink.sh
 

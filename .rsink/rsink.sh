@@ -42,18 +42,18 @@ profile() {
     first=1 # first single character option (add -)
     cat $profiles_directory/$1 | while read -r line || [ -n "$line" ]
     do
-        option=$(printf $line | cut -d \: -f 1)
+        option=$(echo $line | awk '{print $1;}')
         
         if [ ${#option} -eq 1 ]; then # single character options
             if [ $first -eq 1 ]; then
                 first=0
-                printf " -$option"
+                echo " -$option"
             else
-                printf "$option"
+                echo "$option"
             fi
         else # longer options (add --)
             first=1
-            printf " --$option"
+            echo " --$option"
         fi
     done
 }
