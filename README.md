@@ -15,10 +15,10 @@ git clone https://github.com/adamlazz/rsink.git; cd rsink; chmod +x install.sh; 
 Or, if you downloaded rsink from the [releases] [4] page, unzip the file and run:
 
 ```
-cd rsink-x.x; chmod +x install.sh; ./install.sh
+cd rsink-*.*; chmod +x install.sh; ./install.sh
 ```
 
-In order to run `rsink.sh` you must set up your `.rsink` directory. Inside this directory, there is a config file where your sources and destinations are listed. There is also a `profiles` directory, where you can manage settings for different backup schemes. Set up your config file and profiles (below) and then run:
+In order to run `rsink.sh` you must set up your `.rsink` directory. Inside this directory, there is a `config` file where your sources and destinations are listed. There is also a `profiles` directory, where you can manage settings for different backup schemes. Set up your config file and profiles (below) and then run:
 
 ```
 cd ~/.rsink; ./rsink.sh
@@ -40,7 +40,7 @@ profile source dest_drive dest_folder exclude1 exclude2 ...
 
 ## Profiles
 
-The `profiles` directory contains files that create different sets of options for rsync to use. The profiles name is the name of the file. For example, the `dump` profile uses the following options:
+The `profiles` directory contains files that create different sets of options for `rsync` to use. The profiles name is the name of the file. For example, the `dump` profile uses the following options:
 
 ```
 a   archive
@@ -49,7 +49,7 @@ progress    shows the progress
 ignore-existing
 ```
 
-rsink also comes with a `sync` profile for a source to destination sync. Files no longer on the source will be deleted from the destination. 
+The `dump` profile sends source's new files to the destination, where they stay. rsink also comes with a `sync` profile for a source to destination sync. Files no longer on the source will be deleted from the destination. 
 
 * For a full list of options run `man rsync`.
 * You can name profiles whatever you want.

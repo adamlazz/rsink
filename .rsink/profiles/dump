@@ -1,4 +1,5 @@
-a   archive
-E   preserve executability
-progress    shows the progress
+# this profile transfers files from source that don't exist on destination
+
+a   # archive
+E   # preserve executability
 ignore-existing

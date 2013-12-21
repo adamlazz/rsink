@@ -1,5 +1,7 @@
-a           archive mode
-progress    show progress
-delete      if deleted on source, then delete on destination
-delete-excluded     delete excluded files from source on destination
+# source to destination sync. deleted files on source are also deleted from destination
+
+a           # archive mode
+progress    # show progress
+delete      # if deleted on source, then delete on destination
+delete-excluded     # delete excluded files from source on destination
 ignore-existing
