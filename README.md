@@ -43,9 +43,9 @@ profile source dest_drive dest_folder exclude1 exclude2 ...
 The `profiles` directory contains files that create different sets of options for `rsync` to use. The profiles name is the name of the file. For example, the `dump` profile uses the following options:
 
 ```
-a   archive
-E   preserve executability
-progress    shows the progress
+a   # archive
+E   # preserve executability
+progress
 ignore-existing
 ```
 
@@ -53,7 +53,7 @@ The `dump` profile sends source's new files to the destination, where they stay.
 
 * For a full list of options run `man rsync`.
 * You can name profiles whatever you want.
-* You are able to add comments after the argument by separating the command and comment with whitespace.
+* A `#` character indicates the start of a comment.
 
 [1]: https://github.com/adamlazz/rsink/wiki/To-Do
 [2]: https://github.com/adamlazz/rsink/wiki/Testing

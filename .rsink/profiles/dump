@@ -2,4 +2,5 @@
 
 a   # archive
 E   # preserve executability
+progress
 ignore-existing
