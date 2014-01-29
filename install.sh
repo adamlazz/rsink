@@ -5,7 +5,9 @@
 chmod +x .rsink/rsink.sh
 
 # remove current installation (if it exists)
-rm -rf ~/.rsink
+if [ ! -d "~/.rsink" ]; then 
+    rm -rf ~/.rsink
+fi
 
 # move .rsink to home directory
 mv .rsink/ ~

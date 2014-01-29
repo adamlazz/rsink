@@ -5,13 +5,15 @@ config_file="config"
 profiles_directory="profiles"
 log_file="log"
 
+set -e # exit if any program exists with exit status > 0
+
 die() { # stop all rsync commands
     echo "SIGINT - Stopping rsink.sh"
     exit 1
 }
 trap die SIGINT
 
-fail() {
+fail() { # show error, exit
     echo "\033[31mERROR: $1\n$2\033[0m"
     exit 1
 }
@@ -108,9 +110,10 @@ main() {
 
         code=$?
         if [ $code -ne 0 ]; then
-           warn "rsync code: $code\nrsync completed with errors."
+            warn "rsync code: $code\nrsync completed with errors."
         fi
 
+        # log file errors
         if [ $(cat $log_file | grep -c "unknown option") ]; then
             warn "Unknown rsync option"
         elif [ $(cat $log_file | grep -c "No space left on device (28)\|Result too large (34)") ]; then

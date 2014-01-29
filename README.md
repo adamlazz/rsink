@@ -40,7 +40,7 @@ profile source dest_drive dest_folder exclude1 exclude2 ...
 
 ## Profiles
 
-The `profiles` directory contains files that create different sets of options for `rsync` to use. The profiles name is the name of the file. For example, the `dump` profile uses the following options:
+The `profiles` directory contains files that create different sets of options for `rsync` to use. The profile's name is the name of the file. For example, the `dump` profile uses the following options:
 
 ```
 a   # archive
