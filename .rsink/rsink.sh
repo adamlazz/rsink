@@ -1,6 +1,6 @@
 #!/bin/sh
-# rsink.sh 0.1+dev
 
+version="rsink 0.1+dev"
 config_file="config"
 profiles_directory="profiles"
 log_file="log"
@@ -22,6 +22,19 @@ warn() { # show error, don't exit
     echo "\033[31m$1\033[0m"
 }
 
+usage() {
+    echo "rsink.sh <options>"
+    echo "-h <help>"
+    echo "-p <pushover> (Fill in user key and app key in .rsink/tools/pushover.sh)"
+    echo "-v <version>"
+    echo "\n"
+    echo "Config file: $config_file"
+    echo "Profiles directory: $profiles_directory"
+    echo "README: https://github.com/adamlazz/rsink/blob/master/README.md"
+}
+
+# $1 type (file, directory, mounted volume)
+# $2 name
 detect_x() {
     case $1 in
         "f"*) # file
@@ -123,11 +136,14 @@ main() {
     done
 }
 
-options='p'
 pushover=0
+
+options='hpv'
 while getopts $options option; do
     case $option in
+        h) usage; exit 1 ;;
         p) pushover=1 ;;
+        v) echo "$version" ;;
         \? ) fail $OPTARG "Unknown option" ;;
     esac
 done

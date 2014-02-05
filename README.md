@@ -18,10 +18,15 @@ Or, if you downloaded rsink from the [releases] [4] page, unzip the file and run
 cd rsink-*.*; chmod +x install.sh; ./install.sh
 ```
 
-In order to run `rsink.sh` you must set up your `.rsink` directory. Inside this directory, there is a `config` file where your sources and destinations are listed. There is also a `profiles` directory, where you can manage settings for different backup schemes. Set up your config file and profiles (below) and then run:
+## Usage
+
+In order to run `rsink.sh` you must set up your `.rsink` directory. Inside this directory, there is a `config` file where your sources and destinations are listed. There is also a `profiles` directory, where you can manage settings for different backup schemes. Set up your config file and profiles (below) and then run rsink.
 
 ```
-cd ~/.rsink; ./rsink.sh
+rsink.sh <options>
+    -h <help>
+    -p <pushover> (Fill in user key and app key in .rsink/tools/pushover.sh)
+    -v <version>
 ```
 
 You can also [automate] [3] rsink using `crontab`.
@@ -36,7 +41,6 @@ profile source dest_drive dest_folder exclude1 exclude2 ...
 
 * Destination folders can be `.` for root of drive.
 * There can be 0 or more excludes.
-* There are space characters between the tokens in each line.
 
 ## Profiles
 
@@ -49,15 +53,15 @@ progress
 ignore-existing
 ```
 
-The `dump` profile sends source's new files to the destination, where they stay. rsink also comes with a `sync` profile for a source to destination sync. Files no longer on the source will be deleted from the destination.
-
 * For a full list of options run `man rsync`.
 * You can name profiles whatever you want.
 * A `#` character indicates the start of a comment.
 
-## Options
+#### Included profiles
 
-* `-p` [Pushover] [5] support. Enter your user key and application key in `~/.rsink/tools/pushover.sh`
+* `dump` Sends source's new files to the destination, where they stay.
+* `sync` Source to destination sync. Files no longer on the source will be deleted from the destination.
+* `backup` Versioned backup...
 
 [1]: https://github.com/adamlazz/rsink/wiki/To-Do
 [2]: https://github.com/adamlazz/rsink/wiki/Testing

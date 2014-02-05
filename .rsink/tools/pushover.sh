@@ -12,5 +12,3 @@ curl -s \
     -F "title=rsink transfer complete" \
     -F "message=$date" \
     https://api.pushover.net/1/messages.json > /dev/null
-
-
