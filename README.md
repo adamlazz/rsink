@@ -2,11 +2,11 @@
 
 A backup utility for external hard drives that uses `rsync`.
 
-Refer to the ["To Do" wiki page] [1] for ideas on how you can help contribute to rsink. Also, read the ["Testing" wiki page] [2] on how to test rsink without using your personal backup data. 
+Refer to the ["To Do" wiki page] [1] for ideas on how you can help contribute to rsink. Also, read the ["Testing" wiki page] [2] on how to test rsink without using your personal backup data.
 
 ## Installation
 
-To download and install rsink, open a terminal window and run the command: 
+To download and install rsink, open a terminal window and run the command:
 
 ```
 git clone https://github.com/adamlazz/rsink.git; cd rsink; chmod +x install.sh; ./install.sh
@@ -49,13 +49,18 @@ progress
 ignore-existing
 ```
 
-The `dump` profile sends source's new files to the destination, where they stay. rsink also comes with a `sync` profile for a source to destination sync. Files no longer on the source will be deleted from the destination. 
+The `dump` profile sends source's new files to the destination, where they stay. rsink also comes with a `sync` profile for a source to destination sync. Files no longer on the source will be deleted from the destination.
 
 * For a full list of options run `man rsync`.
 * You can name profiles whatever you want.
 * A `#` character indicates the start of a comment.
 
+## Options
+
+* `-p` [Pushover] [5] support. Enter your user key and application key in `~/.rsink/tools/pushover.sh`
+
 [1]: https://github.com/adamlazz/rsink/wiki/To-Do
 [2]: https://github.com/adamlazz/rsink/wiki/Testing
 [3]: https://github.com/adamlazz/rsink/wiki/Automation
 [4]: https://github.com/adamlazz/rsink/releases
+[5]: https://pushover.net

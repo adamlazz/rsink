@@ -5,6 +5,8 @@
 * Bugfix: Exit on Ctrl+C
 * Feature: Check for unknown option and free space errors
 * Feature: Comment lines and empty lines allowed in profiles
+* Feature: Pushover support in .rsink/tools
+* Feature: Options system (h = help, p = pushover)
 
 # v0.1 (December 12, 2013)
 * Initial release

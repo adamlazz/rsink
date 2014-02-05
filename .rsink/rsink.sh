@@ -25,15 +25,15 @@ warn() { # show error, don't exit
 detect_x() {
     case $1 in
         "f"*) # file
-            if [ ! -f $2 ]; then 
+            if [ ! -f $2 ]; then
                 fail $2 "File does not exist."
             fi ;;
         "d"*) # directory
-            if [ ! -d $2 ]; then 
+            if [ ! -d $2 ]; then
                 fail $2 "Directory does not exist."
             fi ;;
         "x"*) # either file or directory
-            if [ ! -f $2 ] && [ ! -d $2 ]; then 
+            if [ ! -f $2 ] && [ ! -d $2 ]; then
                 fail $2 "File or directory does not exist."
             fi ;;
         "m"*) # mount
@@ -123,5 +123,20 @@ main() {
     done
 }
 
+options='p'
+pushover=0
+while getopts $options option; do
+    case $option in
+        p) pushover=1 ;;
+        \? ) fail $OPTARG "Unknown option" ;;
+    esac
+done
+shift $(($OPTIND - 1))
+
 main
+
+if [[ $pushover -eq 1 ]]; then
+    ./tools/pushover.sh
+fi
+
 exit 0

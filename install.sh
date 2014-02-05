@@ -4,8 +4,11 @@
 # add executability permission to rsink.sh
 chmod +x .rsink/rsink.sh
 
+# add executability permission to tools
+chmod +x .rsink/tools/*.sh
+
 # remove current installation (if it exists)
-if [ ! -d "~/.rsink" ]; then 
+if [ ! -d "~/.rsink" ]; then
     rm -rf ~/.rsink
 fi
 
