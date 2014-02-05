@@ -8,7 +8,7 @@
 * Feature: Pushover support in .rsink/tools
 * Feature: Options system
 * Feature: Pushover (`-p`)
-* Feature: Help (`-h`) and version (`-v`) options
+* Feature: Help (`-h`), silent (`-s`) and version (`-v`) options
 
 # v0.1 (December 12, 2013)
 * Initial release

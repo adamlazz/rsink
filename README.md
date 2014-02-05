@@ -23,9 +23,10 @@ cd rsink-*.*; chmod +x install.sh; ./install.sh
 In order to run `rsink.sh` you must set up your `.rsink` directory. Inside this directory, there is a `config` file where your sources and destinations are listed. There is also a `profiles` directory, where you can manage settings for different backup schemes. Set up your config file and profiles (below) and then run rsink.
 
 ```
-rsink.sh <options>
+./rsink.sh <options>
     -h <help>
     -p <pushover> (Fill in user key and app key in .rsink/tools/pushover.sh)
+    -s <silent>
     -v <version>
 ```
 

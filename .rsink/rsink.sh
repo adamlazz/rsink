@@ -23,11 +23,12 @@ warn() { # show error, don't exit
 }
 
 usage() {
-    echo "rsink.sh <options>"
-    echo "-h <help>"
-    echo "-p <pushover> (Fill in user key and app key in .rsink/tools/pushover.sh)"
-    echo "-v <version>"
-    echo "\n"
+    echo "$version\n"
+    echo "./rsink.sh <options>"
+    echo "\t-h <help>"
+    echo "\t-p <pushover> (Fill in user key and app key in .rsink/tools/pushover.sh)"
+    echo "\t-s <silent>"
+    echo "\t-v <version>\n"
     echo "Config file: $config_file"
     echo "Profiles directory: $profiles_directory"
     echo "README: https://github.com/adamlazz/rsink/blob/master/README.md"
@@ -61,9 +62,9 @@ profile() { # parse profile file
 
     first=1 # first single character option (add -)
     cat $profiles_directory/$1 | while read -r line || [ -n "$line" ]; do
-        option=$(echo $line | awk '{print $1;}') # get first token of $line
+        option=$(printf "$line" | awk '{print $1;}') # get first token of $line
 
-        if [ "$(echo $option | head -c 1)" != "#" ] && [ "$option" != "" ]; then # header comment or empty line
+        if [ "$(printf "$option" | head -c 1)" != "#" ] && [ "$option" != "" ]; then # header comment or empty line
             if [ ${#option} -eq 1 ]; then # single character options
                 if [ $first -eq 1 ]; then # (add -)
                     first=0
@@ -79,6 +80,7 @@ profile() { # parse profile file
     done
 }
 
+# build and execute rsync commands
 main() {
     detect_x "f" $config_file
     detect_x "d" $profiles_directory
@@ -91,11 +93,11 @@ main() {
             token=$(($token+1))
 
             if [ $token -eq 1 ]; then # profile
-                profile=$(echo $p | awk '{print $1;}') # get first word of $line
+                profile=$(printf "$p" | awk '{print $1;}') # get first word of $line
                 cmd="$cmd$(profile $profile)"
             elif [ $token -eq 2 ]; then # source
-                if [ "$(echo $p | head -c 1)" = "~" ]; then # ~/source/folder
-                    p=$(echo $p | cut -d "~" -f 2)
+                if [ "$(printf "$p" | head -c 1)" = "~" ]; then # ~/source/folder
+                    p=$(printf "$p" | cut -d "~" -f 2)
                     p="$HOME$p" # /Users/user/source/folder
                 fi
                 src=$p
@@ -118,8 +120,12 @@ main() {
         token=0
 
         cmd="$cmd --log-file='$log_file'"
-        echo $cmd
-        eval $cmd
+        if [[ $silent -eq 1 ]]; then
+            eval $cmd > /dev/null
+        else
+            printf "$cmd"
+            eval $cmd
+        fi
 
         code=$?
         if [ $code -ne 0 ]; then
@@ -137,17 +143,25 @@ main() {
 }
 
 pushover=0
+silent=0
 
-options='hpv'
+options='hpsv'
 while getopts $options option; do
     case $option in
         h) usage; exit 1 ;;
         p) pushover=1 ;;
-        v) echo "$version" ;;
-        \? ) fail $OPTARG "Unknown option" ;;
+        s) silent=1 ;;
+        v) echo "$version"; exit 1 ;;
+        \?) fail $OPTARG "Illegal option" ;;
     esac
 done
 shift $(($OPTIND - 1))
+
+if [[ $silent -eq 1 ]]; then
+    echo () {
+        :
+    }
+fi
 
 main
 
