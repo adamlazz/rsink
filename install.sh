@@ -1,18 +1,18 @@
 #!/bin/sh
 # install.sh
 
-# add executability permission to rsink.sh
+# Add executability permission to rsink.sh
 chmod +x .rsink/rsink.sh
 
-# add executability permission to tools
+# Add executability permission to tools
 chmod +x .rsink/tools/*.sh
 
-# remove current installation (if it exists)
+# Remove current installation (if it exists)
 if [ ! -d "~/.rsink" ]; then
     rm -rf ~/.rsink
 fi
 
-# move .rsink to home directory
+# Move .rsink to home directory
 mv .rsink/ ~
 
 echo "Installed rsink to ~/.rsink"

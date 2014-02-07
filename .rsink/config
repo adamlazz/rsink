@@ -1,2 +1,3 @@
 dump /Users/adaml/Movies /Volumes/MAXTOR .
 sync /Users/adaml/Music /Volumes/MAXTOR . Podcasts
+backup /Users/adaml/Pictures/_Nurple /Volumes/destination Backups/back

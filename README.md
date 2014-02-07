@@ -1,12 +1,12 @@
 # rsink
 
-A backup utility for external hard drives that uses `rsync`.
+A backup utility for external volumes that uses `rsync`.
 
 Refer to the ["To Do" wiki page] [1] for ideas on how you can help contribute to rsink. Also, read the ["Testing" wiki page] [2] on how to test rsink without using your personal backup data.
 
 ## Installation
 
-To download and install rsink, open a terminal window and run the command:
+To clone and install rsink, open a terminal window and run the command:
 
 ```
 git clone https://github.com/adamlazz/rsink.git; cd rsink; chmod +x install.sh; ./install.sh
@@ -24,10 +24,11 @@ In order to run `rsink.sh` you must set up your `.rsink` directory. Inside this 
 
 ```
 ./rsink.sh <options>
-    -h <help>
-    -p <pushover> (Fill in user key and app key in .rsink/tools/pushover.sh)
-    -s <silent>
-    -v <version>
+    -d or --dry-run     # Dry run (don't execute rsync command)
+    -h or --help        # Display help
+    -p or --pushover    # Fill in user key and app key in .rsink/tools/pushover.sh
+    -s or --silent      # Supresses output
+    -v or --version     # Displays version
 ```
 
 You can also [automate] [3] rsink using `crontab`.
@@ -37,10 +38,11 @@ You can also [automate] [3] rsink using `crontab`.
 The `config` file provides instructions for `rsync` on the sources and destinations of your backups. Each line of the file is formatted like so:
 
 ```
-profile source dest_drive dest_folder exclude1 exclude2 ...
+profile source dest_volume dest_folder exclude1 exclude2 ...
 ```
 
-* Destination folders can be `.` for root of drive.
+* There should not be a `/` character at the end of the destination volume or at the beginning of the destination folder.
+* Destination folders can be `.` for root of drive. Otherwise, the folders must exist.
 * There can be 0 or more excludes.
 
 ## Profiles
@@ -60,9 +62,9 @@ ignore-existing
 
 #### Included profiles
 
-* `dump` Sends source's new files to the destination, where they stay.
-* `sync` Source to destination sync. Files no longer on the source will be deleted from the destination.
-* `backup` Versioned backup...
+* `dump` Copies source's new or changed files to the destination. Deleted files on the source will not be deleted from the destination.
+* `sync` Source to destination sync. Files no longer on the source will be deleted from the destination if they exist.
+* `backup` Versioned backup using `rsync --link-dest=PATH`. PATH should be the location you to link the most recent backup to.
 
 [1]: https://github.com/adamlazz/rsink/wiki/To-Do
 [2]: https://github.com/adamlazz/rsink/wiki/Testing

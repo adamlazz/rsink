@@ -5,3 +5,4 @@ destination.dmg
 Vagrantfile
 vminstall.sh
 pushover-keys
+NOTES.md
