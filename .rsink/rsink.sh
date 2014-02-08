@@ -1,10 +1,5 @@
 #!/bin/sh
 
-version="rsink 0.1+dev"
-config_file="config"
-profiles_directory="profiles"
-log_file="log"
-
 set -e # exit if any program exists with exit status > 0
 
 # Usage: Ctrl+C during execution
@@ -51,7 +46,7 @@ usage() {
     echo "./rsink.sh <options>"
     echo "\t-d or --dry-run     # Dry run (don't execute rsync command)"
     echo "\t-h or --help        # Display help"
-    echo "\t-p or --pushover    # Fill in user key and app key in .rsink/tools/pushover.sh"
+    echo "\t-p or --pushover    # Fill in user key and app key in .rsink/$tools_directory/pushover.sh"
     echo "\t-s or --silent      # Supresses output"
     echo "\t-v or --version     # Displays version\n"
     echo "Config file: $config_file"
@@ -228,6 +223,8 @@ main() {
     done
 }
 
+source constants.sh
+
 # Options parsing
 dry=0
 pushover=0
@@ -268,7 +265,7 @@ main
 
 # Send pushover notification
 if [ $pushover -eq 1 ]; then
-    ./tools/pushover.sh
+    ./$tools_directory/pushover.sh
 fi
 
 exit 0

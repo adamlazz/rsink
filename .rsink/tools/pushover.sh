@@ -4,7 +4,7 @@
 appl="" # use your own
 user="" # use your own
 
-date=`date`
+date=`date +"%m-%d-%Y@%H-%M-%S"`
 
 curl -s \
     -F "token=$appl" \

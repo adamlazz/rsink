@@ -7,12 +7,13 @@
 * Feature: Comment lines and empty lines allowed in profiles
 * Feature: Pushover support in .rsink/tools
 * Feature: Single character options system
-* Feature: [Pushover] [1] option (`-p`)
+* Feature: [Pushover] [1] option (`-p` or `--pushover`)
 * Feature: Dry-run (`-d` or `--dry-run`) option
 * Feature: Help (`-h` or `--help`) option
 * Feature: Silent (`-s` or `--silent`) option
 * Feature: Version (`-v` or `--version`) option
 * Feature: [Versioned backup] [2] profile using `rsync --link-dest`
+* Feature: Constants stored in .rsink/settings.sh
 
 ## v0.1 (December 12, 2013)
 * Initial release
