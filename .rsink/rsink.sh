@@ -10,7 +10,7 @@ die() { # stop all rsync commands
     echo "SIGINT - Stopping rsink.sh"
     exit 1
 }
-#trap die SIGINT
+trap die SIGINT
 
 # Usage: fail $1 $2
 #---------------------------------------------------------

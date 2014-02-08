@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.2 (Unreleased)
+## v0.2 (February 8, 2014)
 * Bugfix: Multiple single character options print together
 * Bugfix: Exit on Ctrl+C
 * Feature: Check for unknown option and free space errors
@@ -13,7 +13,7 @@
 * Feature: Silent (`-s` or `--silent`) option
 * Feature: Version (`-v` or `--version`) option
 * Feature: [Versioned backup] [2] profile using `rsync --link-dest`
-* Feature: Constants stored in .rsink/settings.sh
+* Feature: Constants stored in .rsink/constants.sh
 
 ## v0.1 (December 12, 2013)
 * Initial release
