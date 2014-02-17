@@ -5,7 +5,7 @@
 * Bugfix: Exit on Ctrl+C
 * Feature: Check for unknown option and free space errors
 * Feature: Comment lines and empty lines allowed in profiles
-* Feature: Pushover support in .rsink/tools
+* Feature: Pushover support in `.rsink/tools`
 * Feature: Single character options system
 * Feature: [Pushover] [1] option (`-p` or `--pushover`)
 * Feature: Dry-run (`-d` or `--dry-run`) option
@@ -13,7 +13,7 @@
 * Feature: Silent (`-s` or `--silent`) option
 * Feature: Version (`-v` or `--version`) option
 * Feature: [Versioned backup] [2] profile using `rsync --link-dest`
-* Feature: Constants stored in .rsink/constants.sh
+* Feature: Constants stored in `.rsink/constants.sh`
 
 ## v0.1 (December 12, 2013)
 * Initial release

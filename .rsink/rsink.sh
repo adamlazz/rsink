@@ -42,15 +42,15 @@ warn() { # show error, don't exit
 # Display usage. Reads constants defined above.
 #---------------------------------------------------------
 usage() {
-    echo "$version\n"
+    echo "$VERSION\n"
     echo "./rsink.sh <options>"
     echo "\t-d or --dry-run     # Dry run (don't execute rsync command)"
     echo "\t-h or --help        # Display help"
-    echo "\t-p or --pushover    # Fill in user key and app key in .rsink/$tools_directory/pushover.sh"
+    echo "\t-p or --pushover    # Fill in user key and app key in .rsink/$TOOLS_DIRECTORY/pushover.sh"
     echo "\t-s or --silent      # Supresses output"
     echo "\t-v or --version     # Displays version\n"
-    echo "Config file: $config_file"
-    echo "Profiles directory: $profiles_directory/"
+    echo "Config file: $CONFIG_FILE"
+    echo "Profiles directory: $PROFILES_DIRECTORY/"
     echo "README: https://github.com/adamlazz/rsink/blob/master/README.md"
 }
 
@@ -95,15 +95,15 @@ detect_x() {
 #   $1  profile name
 #---------------------------------------------------------
 profile() { # Parse profile file
-    detect_x "f" $profiles_directory/$1 # Detect profile by name
+    detect_x "f" $PROFILES_DIRECTORY/$1 # Detect profile by name
 
-    first=1 # first single character option (add -)
-    cat $profiles_directory/$1 | while read -r line || [ -n "$line" ]; do
-        option=$(printf "$line" | awk '{print $1;}') # get first token of $line
+    first=1 # First single character option (add -)
+    cat $PROFILES_DIRECTORY/$1 | while read -r line || [ -n "$line" ]; do
+        option=$(printf "$line" | awk '{print $1;}') # Get first token of $line
 
         if [ "$(printf "$option" | head -c 1)" != "#" ] && [ "$option" != "" ]; then # Not comment or empty line
-            if [ ${#option} -eq 1 ]; then # Single character options
-                if [ $first -eq 1 ]; then # (add -)
+            if [ ${#option} -eq 1 ]; then # Single character options (add -)
+                if [ $first -eq 1 ]; then
                     first=0
                     printf " -$option"
                 else
@@ -115,7 +115,7 @@ profile() { # Parse profile file
             fi
         fi
     done
-    printf " --log-file=\"$log_file\""
+    printf " --log-file=\"$LOG_FILE\""
 }
 
 # Usage: isBackup $1
@@ -128,7 +128,7 @@ profile() { # Parse profile file
 isBackup() {
     backup=0
     current_version=""
-    line=`cat $profiles_directory/$1 | grep "link-dest"`
+    line=`cat $PROFILES_DIRECTORY/$1 | grep "link-dest"`
     if [ "$line" != "" ]; then
         backup=1
         current_version=`printf $line | cut -d'=' -f2`
@@ -140,10 +140,10 @@ isBackup() {
 # Build and execute rsync commands.
 #---------------------------------------------------------
 main() {
-    detect_x "f" $config_file
-    detect_x "d" $profiles_directory
+    detect_x "f" $CONFIG_FILE
+    detect_x "d" $PROFILES_DIRECTORY
 
-    cat $config_file | while read line || [ -n "$line" ]; do
+    cat $CONFIG_FILE | while read line || [ -n "$line" ]; do
         token=0
         cmd="rsync"
 
@@ -210,12 +210,12 @@ main() {
             fi
 
             # Log file errors
-            if [ $(cat $log_file | grep -c "unknown option") ]; then
+            if [ $(cat $LOG_FILE | grep -c "unknown option") ]; then
                 warn "Unknown rsync option"
-            elif [ $(cat $log_file | grep -c "No space left on device (28)\|Result too large (34)") ]; then
+            elif [ $(cat $LOG_FILE | grep -c "No space left on device (28)\|Result too large (34)") ]; then
                 warn "Not enough space on $dest"
             fi
-            rm $log_file
+            rm $LOG_FILE
         fi
 
         backup=0
@@ -265,7 +265,7 @@ main
 
 # Send pushover notification
 if [ $pushover -eq 1 ]; then
-    ./$tools_directory/pushover.sh
+    ./$TOOLS_DIRECTORY/pushover.sh
 fi
 
 exit 0
