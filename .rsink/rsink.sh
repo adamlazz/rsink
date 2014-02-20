@@ -46,7 +46,7 @@ usage() {
     echo "./rsink.sh <options>"
     echo "\t-d or --dry-run     # Dry run (don't execute rsync command)"
     echo "\t-h or --help        # Display help"
-    echo "\t-p or --pushover    # Fill in user key and app key in .rsink/$TOOLS_DIRECTORY/pushover.sh"
+    echo "\t-p or --pushover    # # Send pushover notification (Requires User/App key in .rsink/$TOOLS_DIRECTORY/pushover.sh)"
     echo "\t-s or --silent      # Supresses output"
     echo "\t-v or --version     # Displays version\n"
     echo "Config file: $CONFIG_FILE"
@@ -70,19 +70,19 @@ detect_x() {
     case $1 in
         "f"*) # File
             if [ ! -f $2 ]; then
-                fail $2 "File does not exist."
+                fail "$2" "File does not exist."
             fi ;;
         "d"*) # Directory
             if [ ! -d $2 ]; then
-                fail $2 "Directory does not exist."
+                fail "$2" "Directory does not exist."
             fi ;;
         "x"*) # Either file or directory
             if [ ! -f $2 ] && [ ! -d $2 ]; then
-                fail $2 "File or directory does not exist."
+                fail "$2" "File or directory does not exist."
             fi ;;
         "m"*) # Mounted volume
             if [ $(mount | grep -c $2) != 1 ]; then
-                fail $2 "Volume not mounted."
+                fail "$2" "Volume not mounted."
             fi ;;
     esac
 }
@@ -95,7 +95,7 @@ detect_x() {
 #   $1  profile name
 #---------------------------------------------------------
 profile() { # Parse profile file
-    detect_x "f" $PROFILES_DIRECTORY/$1 # Detect profile by name
+    detect_x "f" "$PROFILES_DIRECTORY/$1" # Detect profile by name
 
     first=1 # First single character option (add -)
     cat $PROFILES_DIRECTORY/$1 | while read -r line || [ -n "$line" ]; do
@@ -140,15 +140,15 @@ isBackup() {
 # Build and execute rsync commands.
 #---------------------------------------------------------
 main() {
-    detect_x "f" $CONFIG_FILE
-    detect_x "d" $PROFILES_DIRECTORY
+    detect_x "f" "$CONFIG_FILE"
+    detect_x "d" "$PROFILES_DIRECTORY"
 
     cat $CONFIG_FILE | while read line || [ -n "$line" ]; do
         token=0
         cmd="rsync"
 
         for p in $line; do # Parse tokens in config file
-            token=$(($token+1))
+            (( token++ ))
 
             if [ $token -eq 1 ]; then # Profile
                 profile=$(printf "$p" | awk '{print $1;}') # Get first word of $line
@@ -159,11 +159,11 @@ main() {
                     p="$HOME$p" # /Users/user/source/folder or /home/source/folder
                 fi
                 src=$p
-                detect_x "x" $p
+                detect_x "x" "$p"
                 cmd="$cmd $p"
             elif [ $token -eq 3 ]; then # Destination volume
                 dest=$p
-                detect_x "m" $p
+                detect_x "m" "$p"
                 cmd="$cmd $p"
             elif [ $token -eq 4 ]; then # Destination folder
                 if [ "$p" != "." ]; then
@@ -187,12 +187,12 @@ main() {
         # Run rsync
         if [ $silent -eq 1 ]; then
             if [ $dry -ne 1 ]; then
-                eval $cmd > /dev/null
+                eval "$cmd" > /dev/null
             fi
         else
             printf "$cmd\n"
             if [ $dry -ne 1 ]; then
-                eval $cmd
+                eval "$cmd"
             fi
         fi
         code=$?
@@ -200,8 +200,8 @@ main() {
         if [ $dry -ne 1 ]; then
             # Symlink new backup to link-dest path in profile
             if [ $backup -eq 1 ]; then
-                rm -rf $current_version;
-                ln -s $dest $current_version
+                rm -rf "$current_version"
+                ln -s "$dest $current_version"
             fi
 
             # rsync error checking

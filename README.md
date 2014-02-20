@@ -26,7 +26,7 @@ In order to run `rsink.sh` you must set up your `.rsink` directory. Inside this 
 ./rsink.sh <options>
     -d or --dry-run     # Dry run (don't execute rsync command)
     -h or --help        # Display help
-    -p or --pushover    # Fill in user key and app key in .rsink/tools/pushover.sh
+    -p or --pushover    # Send pushover notification (Requires User/App key in .rsink/tools/pushover.sh)
     -s or --silent      # Supresses output
     -v or --version     # Displays version
 ```
