@@ -42,9 +42,9 @@ warn() { # show error, don't exit
 usage() {
     echo "$VERSION\n"
     echo "./rsink.sh <options>"
-    echo -e "\t-d or --dry-run     # Dry run (don't run rsync command)"
+    echo -e "\t-d or --dry-run     # Dry run (Don't run rsync)"
     echo -e "\t-h or --help        # Display help"
-    echo -e "\t-p or --pushover    # Send pushover notification (Requires User/App keys in .rsink/$TOOLS_DIRECTORY/pushover.sh)"
+    echo -e "\t-p or --pushover    # Send Pushover.net notification"
     echo -e "\t-s or --silent      # Silent output"
     echo -e "\t-v or --version     # Displays version\n"
     echo "Config file: $CONFIG_FILE"
