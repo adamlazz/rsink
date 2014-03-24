@@ -24,14 +24,14 @@ In order to run `rsink.sh` you must set up your `.rsink` directory. Inside this 
 
 ```
 ./rsink.sh <options>
-    -d or --dry-run     # Dry run (don't execute rsync command)
+    -d or --dry-run     # Dry run (don't run rsync command)
     -h or --help        # Display help
-    -p or --pushover    # Send pushover notification (Requires User/App key in .rsink/tools/pushover.sh)
-    -s or --silent      # Supresses output
+    -p or --pushover    # Send [pushover] [5] notification (Requires User/App key in .rsink/tools/pushover.sh)
+    -s or --silent      # Silent output
     -v or --version     # Displays version
 ```
 
-You can also [automate] [3] rsink using `crontab`.
+You can also [automate] [3] rsink runs using `crontab`.
 
 ## Configuration
 
@@ -44,6 +44,7 @@ profile source dest_volume dest_folder exclude1 exclude2 ...
 * There should not be a `/` character at the end of the destination volume or at the beginning of the destination folder.
 * Destination folders can be `.` for root of drive. Otherwise, the folders must exist.
 * There can be 0 or more excludes.
+* Destinations that aren't mounted will be skipped.
 
 ## Profiles
 
@@ -58,7 +59,7 @@ ignore-existing
 
 * For a full list of options run `man rsync`.
 * You can name profiles whatever you want.
-* A `#` character indicates the start of a comment.
+* A `#` character indicates the start of a comment. Blank lines are also permitted.
 
 #### Included profiles
 

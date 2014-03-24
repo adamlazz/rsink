@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Send pushover notification
 
 appl="" # use your own

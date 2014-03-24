@@ -1,5 +1,4 @@
-#!/bin/sh
-# install.sh
+#!/bin/bash
 
 # Get constants
 source .rsink/constants.sh

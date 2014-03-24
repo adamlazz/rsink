@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 VERSION="rsink 0.2+dev"
 CONFIG_FILE="config"
