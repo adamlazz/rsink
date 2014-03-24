@@ -1,6 +1,6 @@
-# this profile transfers files from source that don't exist on destination
+# This profile transfers files from source that don't exist on destination
 
-a   # archive
-E   # preserve executability
+a   # Archive
+E   # Preserve executability
 progress
 ignore-existing

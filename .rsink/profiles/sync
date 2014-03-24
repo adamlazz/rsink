@@ -1,7 +1,7 @@
-# source to destination sync. deleted files on source are also deleted from destination
+# Source to destination sync. Deleted files on source are also deleted from destination
 
-a           # archive mode
-progress    # show progress
-delete      # if deleted on source, then delete on destination
-delete-excluded     # delete excluded files from source on destination
+a           # Archive mode
+progress    # Show progress
+delete      # If deleted on source, then delete on destination
+delete-excluded     # Delete excluded files from source on destination
 ignore-existing
