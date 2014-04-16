@@ -9,7 +9,7 @@ Refer to the ["To Do" wiki page] [1] for ideas on how you can help contribute to
 To clone and install rsink, open a terminal window and run the command:
 
 ```
-git clone https://github.com/adamlazz/rsink.git; cd rsink; chmod +x install.sh; ./install.sh
+git clone https://github.com/adamlazz/rsink.git; cd rsink; ./install.sh
 ```
 
 Or, if you downloaded rsink from the [releases] [4] page, unzip the file and run:

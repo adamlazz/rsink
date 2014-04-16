@@ -40,8 +40,8 @@ warn() { # show error, don't exit
 # Display usage. Uses constants from constants.sh
 #---------------------------------------------------------
 usage() {
-    echo "$VERSION\n"
-    echo "./rsink.sh <options>"
+    echo -e "$VERSION\n"
+    echo -e "./rsink.sh <options>"
     echo -e "\t-d or --dry-run     # Dry run (Don't run rsync)"
     echo -e "\t-h or --help        # Display help"
     echo -e "\t-p or --pushover    # Send Pushover.net notification"
@@ -66,19 +66,19 @@ usage() {
 detect_x() {
     case $1 in
         "f"*) # File
-            if [ ! -f $2 ]; then
+            if [ ! -f "$2" ]; then
                 fail "$2" "File does not exist."
             fi ;;
         "d"*) # Directory
-            if [ ! -d $2 ]; then
+            if [ ! -d "$2" ]; then
                 fail "$2" "Directory does not exist."
             fi ;;
         "x"*) # Either file or directory
-            if [ ! -f $2 ] && [ ! -d $2 ]; then
+            if [ ! -f "$2" ] && [ ! -d "$2" ]; then
                 fail "$2" "File or directory does not exist."
             fi ;;
         "m"*) # Mounted volume
-            if [ $(mount | grep -c $2) -ne 1 ]; then
+            if [ "$(mount | grep -c $2)" -ne 1 ]; then
                 warn "$2 not mounted. Skipping."
                 skip=1
             else
@@ -98,24 +98,24 @@ profile() { # Parse profile file
     detect_x "f" "$PROFILES_DIRECTORY/$1" # Detect profile
 
     local first=1 # First single character option (add -)
-    cat $PROFILES_DIRECTORY/$1 | while read -r line || [ -n "$line" ]; do
-        local option=$(printf "$line" | awk '{print $1;}') # Get first token of $line
+    while read -r line || [ -n "$line" ]; do # Parse profile file
+        local option=$(printf "%s" "$line" | awk '{print $1;}') # Get first token of $line
 
-        if [ "$(printf "$option" | head -c 1)" != "#" ] && [ "$option" != "" ]; then # Not comment or empty line
+        if [ "$(printf "%s" "$option" | head -c 1)" != "#" ] && [ "$option" != "" ]; then # Not comment or empty line
             if [ ${#option} -eq 1 ]; then # Single character options (add -)
                 if [ $first -eq 1 ]; then
                     first=0
-                    printf " -$option"
+                    printf " -%s" "$option"
                 else
-                    printf "$option"
+                    printf "%s" "$option"
                 fi
             else # Long options (add --)
                 first=1
-                printf " --$option"
+                printf " --%s" "$option"
             fi
         fi
-    done
-    printf " --log-file=\"$LOG_FILE\""
+    done < "$PROFILES_DIRECTORY/$1"
+    printf " --log-file=\"%s\"" "$LOG_FILE"
 }
 
 # Usage: isBackup $1
@@ -128,10 +128,10 @@ profile() { # Parse profile file
 isBackup() {
     backup=0
     current_version=""
-    local line=$(cat $PROFILES_DIRECTORY/$1 | grep "link-dest")
+    local line=$(grep "link-dest" "$PROFILES_DIRECTORY/$1")
     if [ "$line" != "" ]; then
         backup=1
-        current_version=$(printf $line | cut -d'=' -f2)
+        current_version=$(printf "%s" "$line" | cut -d'=' -f2)
     fi
 }
 
@@ -143,7 +143,7 @@ main() {
     detect_x "f" "$CONFIG_FILE"
     detect_x "d" "$PROFILES_DIRECTORY"
 
-    cat $CONFIG_FILE | while read line || [ -n "$line" ]; do
+    while read line || [ -n "$line" ]; do # Parse config file
         local token=0
         local cmd="rsync"
         backup=0
@@ -153,11 +153,11 @@ main() {
             (( token++ ))
 
             if [ $token -eq 1 ]; then # Profile
-                local profile=$(printf "$p" | awk '{print $1;}') # Get first word of $line
+                local profile=$(printf "%s" "$p" | awk '{print $1;}') # Get first word of $line
                 cmd="$cmd$(profile $profile)"
             elif [ $token -eq 2 ]; then # Source
-                if [ "$(printf "$p" | head -c 1)" = "~" ]; then # ~/source/folder
-                    p=$(printf "$p" | cut -d "~" -f 2)
+                if [ "$(printf "%s" "$p" | head -c 1)" = "~" ]; then # ~/source/folder
+                    p=$(printf "%s" "$p" | cut -d "~" -f 2)
                     p="$HOME$p" # /Users/user/source/folder or /home/source/folder
                 fi
                 local src=$p
@@ -172,9 +172,9 @@ main() {
                 cmd="$cmd $p"
             elif [ $token -eq 4 ]; then # Destination folder
                 if [ "$p" != "." ]; then
-                    isBackup $profile
+                    isBackup "$profile"
                     if [ $backup -ge 1 ]; then
-                        local ddate=$(date +"-%m-%d-%Y@%H-%M-%S") # Dash & date
+                        local ddate=$(date +"-%m-%d-%Y @ %H-%M-%S") # Dash and date
                         dest="$dest/$p$ddate"
                         cmd="$cmd/$p$ddate"
                     else
@@ -210,22 +210,22 @@ main() {
 
             # Log file errors
             if [ $skip -ne 1 ]; then
-                if grep -cq "No space left on device (28)\|Result too large (34)" $LOG_FILE; then
+                if grep -cq "No space left on device (28)\|Result too large (34)" "$LOG_FILE"; then
                     warn "Not enough space on $dest"
                 fi
-                rm $LOG_FILE
+                rm "$LOG_FILE"
             fi
         fi
 
         skip=0
         backup=0
         current_version=""
-    done
+    done < "$CONFIG_FILE"
 }
 
 set -e # exit if any program exists with exit status > 0
 
-source constants.sh
+source ~/.rsink/"constants.sh"
 
 # Options parsing
 dry=0
@@ -253,7 +253,7 @@ while : ; do
             shift
             break ;;
         -*)
-            fail $1 "Illegal option" ;;
+            fail "$1" "Illegal option" ;;
         *)
             break ;;
     esac
@@ -267,7 +267,7 @@ main
 
 # Send pushover notification
 if [ $pushover -eq 1 ]; then
-    ./$TOOLS_DIRECTORY/pushover.sh
+    ./"$TOOLS_DIRECTORY"/pushover.sh
 fi
 
 exit 0
