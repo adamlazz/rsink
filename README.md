@@ -1,6 +1,6 @@
 # rsink
 
-A backup utility for external volumes that uses `rsync`.
+A backup utility for external volumes using `rsync`.
 
 Refer to the ["To Do" wiki page] [1] for ideas on how you can help contribute to rsink. Also, read the ["Testing" wiki page] [2] on how to test rsink without using your personal backup data.
 
@@ -26,21 +26,27 @@ In order to run `rsink.sh` you must set up your `.rsink` directory. Inside this 
 ./rsink.sh <options>
     -d or --dry-run     # Dry run (Don't run rsync)
     -h or --help        # Display help
-    -p or --pushover    # Send Pushover.net notification
     -s or --silent      # Silent output
     -v or --version     # Displays version
 ```
 
-You can also [automate] [3] rsink runs using `crontab`.
+You can also [automate] [3] rsink runs using `cron`.
 
 ## Configuration
 
-The `config` file provides instructions for `rsync` on the sources and destinations of your backups. Each line of the file is formatted like so:
+The `config` file provides instructions for `rsync` on the sources and destinations of your backups. Each entry of the file is formatted like so:
 
 ```
-profile source dest_volume dest_folder exclude1 exclude2 ...
+profile name (required)
+source path (required)
+destination path (required)
+destination folder (required)
+exclude
+...
+<empty line>
 ```
 
+* An empty line indicates the end of a backup configuration.
 * There should not be a `/` character at the end of the destination volume or at the beginning of the destination folder.
 * Destination folders can be `.` for root of drive. Otherwise, the folders must exist.
 * There can be 0 or more excludes.
@@ -65,10 +71,9 @@ ignore-existing
 
 * `dump` Copies source's new or changed files to the destination. Deleted files on the source will not be deleted from the destination.
 * `sync` Source to destination sync. Files no longer on the source will be deleted from the destination if they exist.
-* `backup` Versioned backup using `rsync --link-dest=PATH`. PATH should be the location you to link the most recent backup to.
+* `backup` Versioned backup using `rsync --link-dest=PATH`. PATH should be the location you to link the most recent backup to. A destination folder must be assigned in the `config` file.
 
 [1]: https://github.com/adamlazz/rsink/wiki/To-Do
 [2]: https://github.com/adamlazz/rsink/wiki/Testing
 [3]: https://github.com/adamlazz/rsink/wiki/Automation
 [4]: https://github.com/adamlazz/rsink/releases
-[5]: https://pushover.net

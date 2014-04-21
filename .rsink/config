@@ -1,3 +1,28 @@
-dump /Users/adaml/Movies /Volumes/MAXTOR .
-sync /Users/adaml/Music /Volumes/MAXTOR . Podcasts
-backup /Users/adaml/Pictures/_test /Volumes/destination Backups/back
+# rsink.sh config file format:
+# An empty line indicates the end of a backup configuration.
+#
+# profile name (required)
+# source path (required)
+# destination path (required)
+# destination folder (required)
+# exclude
+# ...
+# <empty line>
+#
+# See https://github.com/adamlazz/rsink/blob/master/README.md
+dump
+/Users/adaml/Movies
+/Volumes/MAXTOR
+.
+
+sync
+/Users/adaml/Music
+/Volumes/MAXTOR
+.
+Podcasts
+
+backup
+/Users/adaml/Pictures/_test
+/Volumes/dest test vol
+Backups/back
+
