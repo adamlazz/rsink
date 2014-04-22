@@ -1,8 +1,5 @@
 .DS_Store
 .git
 .vagrant
-destination.dmg
+*.dmg
 Vagrantfile
-vminstall.sh
-pushover-keys
-NOTES.md

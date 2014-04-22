@@ -4,7 +4,11 @@
 * Bugfix: Use `#!/bin/bash` shebang line
 * Bugfix: Use `local` for local function variables
 * Bugfix: Print version from `.rsink/constants.sh` file
+* Feature: `\n`-delimited `config` file
+* Feature: Options stored in array, not in a string
 * Feature: Skip destinations that are not mounted
+* Removal: `constants.sh` file
+* Removal: Pushover support. Easy to implement on your own.
 
 ## v0.2 (February 8, 2014)
 * Bugfix: Multiple single character options print together
