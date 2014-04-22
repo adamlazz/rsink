@@ -59,6 +59,7 @@ usage() {
 #   $1  Type
 #       * "f" File
 #       * "d" Directory
+#       * "L" Symbolic link
 #       * "x" File or directory
 #       * "m" Mounted volume
 #   $2  File/folder name
@@ -72,6 +73,10 @@ detect_x() {
         "d"*) # Directory
             if [ ! -d "$2" ]; then
                 fail "$2" "Directory does not exist."
+            fi ;;
+        "L"*) # Symbolic link
+            if [ ! -L "$2" ]; then
+                warn "$2 is not a symbolic link. Proceeding."
             fi ;;
         "x"*) # Either file or directory
             if [ ! -f "$2" ] && [ ! -d "$2" ]; then
@@ -96,20 +101,11 @@ detect_x() {
 #   $1  profile file
 #---------------------------------------------------------
 profile(){
-    while read line || [ -n "$line" ]; do
+    while read line; do
+        arg=${line%#*} # Disregard comment
+        arg="${arg%%*( )}" # Trim trailing whitespace
 
-
-
-
-        #####################
-        # handling comments in profiles makes multi word destinations fail
-        #arg=$(printf "%s" "$line" | awk '{print $1;}')
-        arg=${line%#*}
-        #####################
-
-
-
-
+        # Only consider non-comment and non-empty lines
         if [[ $(printf "%s" "$line" | head -c 1) != "#" && -n "$line" ]]; then
             if [ "${#arg}" -eq 1 ]; then
                 args=("${args[@]}" "-$arg")
@@ -136,8 +132,7 @@ isBackup() {
         current_version=${line#"link-dest="}
         current_version=${current_version#"'"}
         current_version=${current_version%"'"}
-
-        # detect link current_version & warn
+        detect_x "L" "$current_version"
     fi
 }
 
@@ -217,7 +212,8 @@ main() {
     done < "$CONFIG_FILE"
 }
 
-set -e # exit if any program exists with exit status > 0
+set -e # Exit if any program exists with exit status > 0
+shopt -s extglob # Extended pattern matching
 
 VERSION="rsink 0.2+dev"
 CONFIG_FILE="config"
