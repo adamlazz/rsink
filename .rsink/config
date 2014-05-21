@@ -12,12 +12,12 @@
 # See https://github.com/adamlazz/rsink/blob/master/README.md
 dump
 /Users/adaml/Movies
-/Volumes/MAXTOR
+/Volumes/SEAPORT
 .
 
 sync
 /Users/adaml/Music
-/Volumes/MAXTOR
+/Volumes/SEAPORT
 .
 Podcasts
 

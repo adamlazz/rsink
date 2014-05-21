@@ -150,9 +150,13 @@ main() {
     while read -r line; do # Parse config file
     if [[ "$(printf "%s" "$line" | awk '{print $1;}')" != "#" ]]; then
         if [[ "$line" == "" ]]; then
-            echo "> rsync" "${args[@]}" "\"$src\"" "\"$dest\"" "${excludes[@]}" --log-file="'$LOG_FILE'"
-            if [[ "$dry" -ne 1 && "$skip" -ne 1 ]]; then
-                rsync "${args[@]}" "$src" "$dest" "${excludes[@]}" --log-file="$LOG_FILE" > /dev/null
+            if [[ "$skip" -ne 1 ]]; then
+                echo "> rsync" "${args[@]}" "\"$src\"" "\"$dest\"" "${excludes[@]}" --log-file="'$LOG_FILE'"
+                if [ "$dry" -ne 1 ]; then
+                    rsync "${args[@]}" "$src" "$dest" "${excludes[@]}" --log-file="$LOG_FILE"
+                elif [ "$dry" -eq 1 ]; then
+                    rsync "${args[@]}" "$src" "$dest" "${excludes[@]}" --log-file="$LOG_FILE" --dry-run
+                fi
             fi
             code=$?
             args=()
@@ -205,7 +209,7 @@ main() {
             fi
         elif [[ "$token" -ge 5 && "$skip" -ne 1 ]]; then # Excludes
             detect_x "x" "$src/$line"
-            excludes=("${excludes[@]}" "--exclude=\"$line\"")
+            excludes=("${excludes[@]}" "--exclude=$line")
         fi
         (( token++ ))
     fi

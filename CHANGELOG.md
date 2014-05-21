@@ -7,6 +7,7 @@
 * Feature: `\n`-delimited `config` file
 * Feature: Options stored in array, not in a string
 * Feature: Skip destinations that are not mounted
+* Feature: Use rsync `--dry-run` during rsink `--dry-run`
 * Removal: `constants.sh` file
 * Removal: Pushover support. Easy to implement on your own.
 

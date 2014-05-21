@@ -2,14 +2,8 @@
 
 set -e
 
-# Get constants
-source .rsink/constants.sh
-
 # Add executability permission to rsink.sh
 chmod +x .rsink/rsink.sh
-
-# Add executability permission to tools
-chmod +x .rsink/"$tools_directory"/*.sh
 
 # Remove current installation (if it exists)
 if [ ! -d "~/.rsink" ]; then
