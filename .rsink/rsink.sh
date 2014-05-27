@@ -151,7 +151,7 @@ main() {
     if [[ "$(printf "%s" "$line" | awk '{print $1;}')" != "#" ]]; then
         if [[ "$line" == "" ]]; then
             if [[ "$skip" -ne 1 ]]; then
-                echo "> rsync" "${args[@]}" "\"$src\"" "\"$dest\"" "${excludes[@]}" --log-file="'$LOG_FILE'"
+                echo ">> rsync" "${args[@]}" "$src" "$dest" "${excludes[@]}" --log-file="$LOG_FILE"
                 if [ "$dry" -ne 1 ]; then
                     rsync "${args[@]}" "$src" "$dest" "${excludes[@]}" --log-file="$LOG_FILE"
                 elif [ "$dry" -eq 1 ]; then
@@ -199,7 +199,9 @@ main() {
         elif [[ "$token" -eq 4 && "$skip" -ne 1 ]]; then # Destination folder
             if [ "$line" != "." ]; then
                 isBackup "$profile"
-                if [ $backup -ge 1 ]; then
+                if [ "$backup" -eq 1 ]; then
+                    args=(${args[@]/<dest>/$dest})
+                    current_version=${current_version/<dest>/$dest}
                     local ddate=$(date +"-%m-%d-%Y@%H-%M-%S") # Dash and date
                     dest="$dest/$line$ddate"
                 else

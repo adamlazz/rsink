@@ -40,7 +40,7 @@ The `config` file provides instructions for `rsync` on the sources and destinati
 profile name (required)
 source path (required)
 destination path (required)
-destination folder (required)
+destination folder (required & must exist)
 exclude
 ...
 <empty line>
@@ -71,7 +71,7 @@ ignore-existing
 
 * `dump` Copies source's new or changed files to the destination. Deleted files on the source will not be deleted from the destination.
 * `sync` Source to destination sync. Files no longer on the source will be deleted from the destination if they exist.
-* `backup` Versioned backup using `rsync --link-dest=PATH`. PATH should be the location you to link the most recent backup to. A destination folder must be assigned in the `config` file.
+* `backup` Versioned backup using `rsync --link-dest=PATH`. `PATH` is the location of the symbolic link to the most recent backup. You may use `<dest>` as a placeholder for the destination volume, to allow for re-use of profiles on multiple volumes. A destination folder must be assigned in the `config` file and this folder must exist. Date and time data will be added to this destination folder to identify backups.
 
 [1]: https://github.com/adamlazz/rsink/wiki/To-Do
 [2]: https://github.com/adamlazz/rsink/wiki/Testing

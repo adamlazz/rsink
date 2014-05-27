@@ -4,7 +4,7 @@
 # profile name (required)
 # source path (required)
 # destination path (required)
-# destination folder (required)
+# destination folder (required & must exist)
 # exclude
 # ...
 # <empty line>
@@ -23,6 +23,7 @@ Podcasts
 
 backup
 /Users/adaml/Pictures/_test
-/Volumes/dest test vol
+/Volumes/destination
 Backups/back
+foo.jpg
 
