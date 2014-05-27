@@ -130,8 +130,6 @@ isBackup() {
     if [ "$line" != "" ]; then
         backup=1
         current_version=${line#"link-dest="}
-        current_version=${current_version#"'"}
-        current_version=${current_version%"'"}
         detect_x "L" "$current_version"
     fi
 }
@@ -200,7 +198,8 @@ main() {
             if [ "$line" != "." ]; then
                 isBackup "$profile"
                 if [ "$backup" -eq 1 ]; then
-                    args=(${args[@]/<dest>/$dest})
+                    detect_x "d" "$dest/${line%/*}" # Ensure directories exist
+                    args=(${args[@]/<dest>/$dest}) # Replace "<dest>" with actual destination
                     current_version=${current_version/<dest>/$dest}
                     local ddate=$(date +"-%m-%d-%Y@%H-%M-%S") # Dash and date
                     dest="$dest/$line$ddate"

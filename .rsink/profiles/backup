@@ -2,4 +2,4 @@
 
 a
 P
-link-dest='<dest>/current'
+link-dest=<dest>/current
