@@ -201,7 +201,7 @@ main() {
                     detect_x "d" "$dest/${line%/*}" # Ensure directories exist
                     args=(${args[@]/<dest>/$dest}) # Replace "<dest>" with actual destination
                     current_version=${current_version/<dest>/$dest}
-                    local ddate=$(date +"-%m-%d-%Y@%H-%M-%S") # Dash and date
+                    local ddate=$(date +"-%Y-%m-%d-%H-%M-%S") # Dash and date
                     dest="$dest/$line$ddate"
                 else
                     detect_x "d" "$dest/$line"
