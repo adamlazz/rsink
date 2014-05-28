@@ -130,7 +130,6 @@ isBackup() {
     if [ "$line" != "" ]; then
         backup=1
         current_version=${line#"link-dest="}
-        detect_x "L" "$current_version"
     fi
 }
 
@@ -201,6 +200,8 @@ main() {
                     detect_x "d" "$dest/${line%/*}" # Ensure directories exist
                     args=(${args[@]/<dest>/$dest}) # Replace "<dest>" with actual destination
                     current_version=${current_version/<dest>/$dest}
+                    detect_x "L" "$current_version"
+
                     local ddate=$(date +"-%Y-%m-%d-%H-%M-%S") # Dash and date
                     dest="$dest/$line$ddate"
                 else
@@ -253,10 +254,10 @@ while : ; do
     esac
 done
 
-if [ $silent -eq 1 ]; then
-    echo () { : ; } # Redefine echo
+if [ "$silent" -eq 1 ]; then
+    main > /dev/null
+else
+    main
 fi
-
-main
 
 exit 0
