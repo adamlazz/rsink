@@ -8,7 +8,9 @@
 * Feature: Options stored in array, not in a string
 * Feature: Skip destinations that are not mounted
 * Feature: Use rsync `--dry-run` during rsink `--dry-run`
-* Feature: `<dest>` placeholder for rsync `link-dest` option in backup profiles. Allows for reuse of backup profiles among multiple destinations.
+* Feature: `<dest>` placeholder for `rsync link-dest` option in backup profiles and similar options where paths are required. Allows for reuse of backup profiles among multiple destinations.
+* Feature: `<source>` placeholder for `rsync exclude-from` option and similar options where paths are required.
+* Feature: `config` and `profile` absolute paths
 * Removal: `constants.sh` file
 * Removal: Pushover support. Easy to implement on your own.
 

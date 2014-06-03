@@ -229,8 +229,8 @@ set -e # Exit if any program exists with exit status > 0
 shopt -s extglob # Extended pattern matching
 
 VERSION="rsink 0.2+dev"
-CONFIG_FILE="config"
-PROFILES_DIRECTORY="profiles"
+CONFIG_FILE=`pwd`"/config"
+PROFILES_DIRECTORY=`pwd`"/profiles"
 LOG_FILE="log"
 
 # Options parsing
