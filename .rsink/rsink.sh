@@ -20,7 +20,7 @@ trap die SIGINT
 #   $2  message
 #---------------------------------------------------------
 fail() { # show error, exit
-    echo -e "[0;31mERROR: $1\n$2[0m"
+    echo -e "[0;31mERROR: $1[0m"
     exit 1
 }
 
@@ -68,11 +68,11 @@ detect_x() {
     case $1 in
         "f"*) # File
             if [ ! -f "$2" ]; then
-                fail "$2" "File does not exist."
+                fail "$2 File does not exist."
             fi ;;
         "d"*) # Directory
             if [ ! -d "$2" ]; then
-                fail "$2" "Directory does not exist."
+                fail "$2 Directory does not exist."
             fi ;;
         "L"*) # Symbolic link
             if [ ! -L "$2" ]; then
@@ -80,7 +80,7 @@ detect_x() {
             fi ;;
         "x"*) # Either file or directory
             if [ ! -f "$2" ] && [ ! -d "$2" ]; then
-                fail "$2" "File or directory does not exist."
+                fail "$2 File or directory does not exist."
             fi ;;
         "m"*) # Mounted volume
             if ! mount | grep "$2" > /dev/null; then
@@ -140,15 +140,19 @@ isBackup() {
 main() {
     detect_x "f" "$CONFIG_FILE"
     detect_x "d" "$PROFILES_DIRECTORY"
+    cat -s "$CONFIG_FILE" > "$CONFIG_FILE-tmp"
+    mv "$CONFIG_FILE-tmp" "$CONFIG_FILE"
 
     backup=0
     skip=0
     token=1
     while read -r line; do # Parse config file
     if [[ "$(printf "%s" "$line" | awk '{print $1;}')" != "#" ]]; then
-        if [[ "$line" == "" ]]; then
+        if [[ "$line" == "" && -n "$src" && -n "$dest" ]]; then # Empty line. Build and execute rsync command
             if [[ "$skip" -ne 1 ]]; then
-                echo ">> rsync" "${args[@]}" "$src" "$dest" "${excludes[@]}" --log-file="$LOG_FILE"
+                echo ">> rsync" "${args[@]}" "$src" "$dest" "${excludes[@]}" --log-file="$LOG_FILE" # Echo command
+
+                # Run rsync
                 if [ "$dry" -ne 1 ]; then
                     rsync "${args[@]}" "$src" "$dest" "${excludes[@]}" --log-file="$LOG_FILE"
                 elif [ "$dry" -eq 1 ]; then
@@ -181,6 +185,8 @@ main() {
 
             skip=0
             backup=0
+            src=""
+            dest=""
             current_version=""
         elif [ "$token" -eq 1 ]; then # Profile
             detect_x "f" "$PROFILES_DIRECTORY/$line"
@@ -189,6 +195,7 @@ main() {
         elif [ "$token" -eq 2 ]; then # Source
             detect_x "x" "$line"
             src="$line"
+            args=(${args[@]/<source>/$src}) # Replace "<source>" with actual destination
         elif [ "$token" -eq 3 ]; then # Destination volume
             detect_x "m" "$line"
             volume="$line"

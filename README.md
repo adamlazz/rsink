@@ -46,7 +46,7 @@ exclude
 <empty line>
 ```
 
-* An empty line indicates the end of a backup configuration.
+* An empty line or EOF indicates the end of a backup configuration.
 * There should not be a `/` character at the end of the destination volume or at the beginning of the destination folder.
 * Destination folders can be `.` for root of drive. Otherwise, the folders must exist.
 * There can be 0 or more excludes.
