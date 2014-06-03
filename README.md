@@ -4,23 +4,11 @@ A backup utility for external volumes using `rsync`.
 
 Refer to the ["To Do" wiki page] [1] for ideas on how you can help contribute to rsink. Also, read the ["Testing" wiki page] [2] on how to test rsink without using your personal backup data.
 
-## Installation
-
-To clone and install rsink, open a terminal window and run the command:
-
-```
-git clone https://github.com/adamlazz/rsink.git; cd rsink; ./install.sh
-```
-
-Or, if you downloaded rsink from the [releases] [4] page, unzip the file and run:
-
-```
-cd rsink-*.*; chmod +x install.sh; ./install.sh
-```
-
 ## Usage
 
-In order to run `rsink.sh` you must set up your `.rsink` directory. Inside this directory, there is a `config` file where your sources and destinations are listed. There is also a `profiles` directory, where you can manage settings for different backup schemes. Set up your config file and profiles (below) and then run rsink.
+Clone rsink using `git clone https://github.com/adamlazz/rsink.git`, or download a release from the [releases] [4] page. You can move the `rsink` directory wherever you want.
+
+In order to run `rsink.sh` you must set up your `rsink` directory. Inside this directory, there is a `config` file where your sources and destinations are listed. There is also a `profiles` directory, where you can manage settings for different backup schemes. Set up your config file and profiles (below) and then run rsink.
 
 ```
 ./rsink.sh <options>

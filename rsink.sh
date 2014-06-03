@@ -195,7 +195,7 @@ main() {
         elif [ "$token" -eq 2 ]; then # Source
             detect_x "x" "$line"
             src="$line"
-            args=(${args[@]/<source>/$src}) # Replace "<source>" with actual destination
+            args=("${args[@]/<source>/$src}") # Replace "<source>" with actual destination
         elif [ "$token" -eq 3 ]; then # Destination volume
             detect_x "m" "$line"
             volume="$line"
@@ -205,8 +205,8 @@ main() {
                 isBackup "$profile"
                 if [ "$backup" -eq 1 ]; then
                     detect_x "d" "$dest/${line%/*}" # Ensure directories exist
-                    args=(${args[@]/<dest>/$dest}) # Replace "<dest>" with actual destination
-                    current_version=${current_version/<dest>/$dest}
+                    args=("${args[@]/<dest>/$dest}") # Replace "<dest>" with actual destination
+                    current_version="${current_version/<dest>/$dest}"
                     detect_x "L" "$current_version"
 
                     local ddate=$(date +"-%Y-%m-%d-%H-%M-%S") # Dash and date
@@ -228,9 +228,11 @@ main() {
 set -e # Exit if any program exists with exit status > 0
 shopt -s extglob # Extended pattern matching
 
+dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)" # Get directory rsink is in
+
 VERSION="rsink 0.2+dev"
-CONFIG_FILE=`pwd`"/config"
-PROFILES_DIRECTORY=`pwd`"/profiles"
+CONFIG_FILE="$dir/config"
+PROFILES_DIRECTORY="$dir/profiles"
 LOG_FILE="log"
 
 # Options parsing
