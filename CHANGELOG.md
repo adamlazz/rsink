@@ -3,15 +3,14 @@
 ## v0.2+dev
 * Bugfix: Use `#!/bin/bash` shebang line
 * Bugfix: Use `local` for local function variables
-* Bugfix: Print version from `.rsink/constants.sh` file
 * Feature: `\n`-delimited `config` file
 * Feature: Options stored in array, not in a string
 * Feature: Skip destinations that are not mounted
-* Feature: Use rsync `--dry-run` during rsink `--dry-run`
+* Feature: Use `rsync --dry-run` during `rsink --dry-run`
 * Feature: `<dest>` placeholder for `rsync link-dest` option in backup profiles and similar options where paths are required. Allows for reuse of backup profiles among multiple destinations.
 * Feature: `<source>` placeholder for `rsync exclude-from` option and similar options where paths are required.
-* Feature: `config` and `profile` absolute paths. No need to `cd` into rsink folder. Call rsink from anywhere.
-* Removal: `install.sh` file and `.rsink` folder. Keep rsink folder wherever you want, with the `LICENSE.md` and `README.md`.
+* Feature: `config` and `profile` absolute paths. No need to `cd` into your rsink folder. Call rsink from anywhere.
+* Removal: `install.sh` file and `.rsink` folder. Keep rsink folder wherever you want, along with `LICENSE.md` and `README.md`.
 * Removal: `constants.sh` file
 * Removal: Pushover support. Easy to implement on your own.
 

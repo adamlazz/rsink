@@ -4,12 +4,13 @@
 # profile name (required)
 # source path (required)
 # destination path (required)
-# destination folder (required & must exist)
+# destination folder (required and must exist)
 # exclude
 # ...
 # <empty line>
 #
 # See https://github.com/adamlazz/rsink/blob/master/README.md
+
 dump
 /Users/adaml/Movies
 /Volumes/SEAPORT

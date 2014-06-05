@@ -16,8 +16,7 @@ trap die SIGINT
 # code 1.
 #
 # Inputs
-#   $1  errant value/variable
-#   $2  message
+#   $1  errant value/variable and message
 #---------------------------------------------------------
 fail() { # show error, exit
     echo -e "[0;31mERROR: $1[0m"
@@ -101,7 +100,8 @@ detect_x() {
 #   $1  profile file
 #---------------------------------------------------------
 profile(){
-    while read line; do
+    sed -i '' '$a\' "$1" # Add new line to end of profile if one does not exist
+    while read -r line; do
         arg=${line%#*} # Disregard comment
         arg="${arg%%*( )}" # Trim trailing whitespace
 
@@ -140,17 +140,15 @@ isBackup() {
 main() {
     detect_x "f" "$CONFIG_FILE"
     detect_x "d" "$PROFILES_DIRECTORY"
-    cat -s "$CONFIG_FILE" > "$CONFIG_FILE-tmp"
-    mv "$CONFIG_FILE-tmp" "$CONFIG_FILE"
 
     backup=0
     skip=0
-    token=1
+    token=0
     while read -r line; do # Parse config file
-    if [[ "$(printf "%s" "$line" | awk '{print $1;}')" != "#" ]]; then
+    if [[ "$(printf "%s" "$line" | head -c 1)" != "#" ]]; then # Not comment line
         if [[ "$line" == "" && -n "$src" && -n "$dest" ]]; then # Empty line. Build and execute rsync command
             if [[ "$skip" -ne 1 ]]; then
-                echo ">> rsync" "${args[@]}" "$src" "$dest" "${excludes[@]}" --log-file="$LOG_FILE" # Echo command
+                echo ">> rsync" "${args[@]}" "$src" "$dest" "${excludes[@]}" --log-file="$LOG_FILE"
 
                 # Run rsync
                 if [ "$dry" -ne 1 ]; then
@@ -188,7 +186,13 @@ main() {
             src=""
             dest=""
             current_version=""
-        elif [ "$token" -eq 1 ]; then # Profile
+        elif [[ "$line" == "" && -z "$src" && -z "$dest" ]]; then # Empty line, no source or dest
+            token=0
+        else
+            (( token++ ))
+        fi
+
+        if [[ "$token" -eq 1 && "$line" != "" ]]; then # Profile
             detect_x "f" "$PROFILES_DIRECTORY/$line"
             profile="$PROFILES_DIRECTORY/$line"
             profile "$profile"
@@ -220,7 +224,6 @@ main() {
             detect_x "x" "$src/$line"
             excludes=("${excludes[@]}" "--exclude=$line")
         fi
-        (( token++ ))
     fi
     done < "$CONFIG_FILE"
 }
@@ -230,7 +233,7 @@ shopt -s extglob # Extended pattern matching
 
 dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)" # Get directory rsink is in
 
-VERSION="rsink 0.2+dev"
+VERSION="rsink v0.2+dev"
 CONFIG_FILE="$dir/config"
 PROFILES_DIRECTORY="$dir/profiles"
 LOG_FILE="log"

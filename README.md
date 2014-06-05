@@ -22,23 +22,24 @@ You can also [automate] [3] rsink runs using `cron`.
 
 ## Configuration
 
-The `config` file provides instructions for `rsync` on the sources and destinations of your backups. Each entry of the file is formatted like so:
+The `config` file provides instructions for `rsync` on the sources and destinations for your backups. Each entry of the file is formatted like so:
 
 ```
 profile name (required)
 source path (required)
 destination path (required)
-destination folder (required & must exist)
+destination folder (required and must exist)
 exclude
 ...
 <empty line>
 ```
 
-* An empty line or EOF indicates the end of a backup configuration.
+* A `#` at the beginning of a line indicates a comment.
 * There should not be a `/` character at the end of the destination volume or at the beginning of the destination folder.
+* Destinations that are not mounted will be skipped.
 * Destination folders can be `.` for root of drive. Otherwise, the folders must exist.
 * There can be 0 or more excludes.
-* Destinations that aren't mounted will be skipped.
+* An new line character `\n` indicates the end of a backup configuration.
 
 ## Profiles
 
@@ -51,15 +52,14 @@ progress
 ignore-existing
 ```
 
-* For a full list of options run `man rsync`.
-* You can name profiles whatever you want.
 * A `#` character indicates the start of a comment. Blank lines are also permitted.
+* `<source>` and `<dest>` are available as placeholders, so that profiles are not tied to specific sources or destinations.
 
 #### Included profiles
 
 * `dump` Copies source's new or changed files to the destination. Deleted files on the source will not be deleted from the destination.
 * `sync` Source to destination sync. Files no longer on the source will be deleted from the destination if they exist.
-* `backup` Versioned backup using `rsync --link-dest=PATH`. `PATH` is the location of the symbolic link to the most recent backup. You may use `<dest>` as a placeholder for the destination volume, to allow for re-use of profiles on multiple volumes. A destination folder must be assigned in the `config` file and this folder must exist. Date and time data will be added to this destination folder to identify backups.
+* `backup` Versioned backup using `rsync --link-dest=PATH`. `PATH` is the location of the symbolic link to the most recent backup. You may use `<dest>` as a placeholder for the destination volume. A destination folder must be assigned in the `config` file and this folder must exist. Date and time data will be added to this destination folder to identify backups.
 
 [1]: https://github.com/adamlazz/rsink/wiki/To-Do
 [2]: https://github.com/adamlazz/rsink/wiki/Testing
