@@ -1,14 +1,12 @@
 # rsink
 
-A backup utility for external volumes using `rsync`.
+rsink is a Bash script for managing and executing backup and data transfer plans using `rsync`.
 
-Refer to the ["To Do" wiki page] [1] for ideas on how you can help contribute to rsink. Also, read the ["Testing" wiki page] [2] on how to test rsink without using your personal backup data.
+## Getting started
 
-## Usage
+Clone rsink using `git clone https://github.com/adamlazz/rsink.git`, or download and unzip a release from the [releases] [1] page. You can move the resulting `rsink` directory wherever you want.
 
-Clone rsink using `git clone https://github.com/adamlazz/rsink.git`, or download a release from the [releases] [4] page. You can move the `rsink` directory wherever you want.
-
-In order to run `rsink.sh` you must set up your `rsink` directory. Inside this directory, there is a `config` file where your sources and destinations are listed. There is also a `profiles` directory, where you can manage settings for different backup schemes. Set up your config file and profiles (below) and then run rsink.
+In order to run `rsink/rsink.sh` you must set up your `rsink` directory. Inside this directory, there is a `config` file where your sources and destinations are listed. There is also a `profiles` directory, where you can manage `rsync` options for different backup schemes. Set up your config file and profiles (below) and then run rsink.
 
 ```
 ./rsink.sh <options>
@@ -17,8 +15,6 @@ In order to run `rsink.sh` you must set up your `rsink` directory. Inside this d
     -s or --silent      # Silent output
     -v or --version     # Displays version
 ```
-
-You can also [automate] [3] rsink runs using `cron`.
 
 ## Configuration
 
@@ -31,7 +27,7 @@ destination path (required)
 destination folder (required and must exist)
 exclude
 ...
-<empty line>
+<new line>
 ```
 
 * A `#` at the beginning of a line indicates a comment.
@@ -61,7 +57,4 @@ ignore-existing
 * `sync` Source to destination sync. Files no longer on the source will be deleted from the destination if they exist.
 * `backup` Versioned backup using `rsync --link-dest=PATH`. `PATH` is the location of the symbolic link to the most recent backup. You may use `<dest>` as a placeholder for the destination volume. A destination folder must be assigned in the `config` file and this folder must exist. Date and time data will be added to this destination folder to identify backups.
 
-[1]: https://github.com/adamlazz/rsink/wiki/To-Do
-[2]: https://github.com/adamlazz/rsink/wiki/Testing
-[3]: https://github.com/adamlazz/rsink/wiki/Automation
-[4]: https://github.com/adamlazz/rsink/releases
+[1]: https://github.com/adamlazz/rsink/releases

@@ -1,5 +1,5 @@
 # rsink.sh config file format:
-# An empty line indicates the end of a backup configuration.
+# A new line indicates the end of a backup configuration.
 #
 # profile name (required)
 # source path (required)
@@ -7,9 +7,9 @@
 # destination folder (required and must exist)
 # exclude
 # ...
-# <empty line>
+# <new line>
 #
-# See https://github.com/adamlazz/rsink/blob/master/README.md
+# For more information , see README.md
 
 dump
 /Users/adaml/Movies

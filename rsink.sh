@@ -100,7 +100,7 @@ detect_x() {
 #   $1  profile file
 #---------------------------------------------------------
 profile(){
-    sed -i '' '$a\' "$1" # Add new line to end of profile if one does not exist
+    sed -i '' -e '$a\' "$1" # Add new line to end of profile if one does not exist
     while read -r line; do
         arg=${line%#*} # Disregard comment
         arg="${arg%%*( )}" # Trim trailing whitespace
@@ -148,14 +148,8 @@ main() {
     if [[ "$(printf "%s" "$line" | head -c 1)" != "#" ]]; then # Not comment line
         if [[ "$line" == "" && -n "$src" && -n "$dest" ]]; then # Empty line. Build and execute rsync command
             if [[ "$skip" -ne 1 ]]; then
-                echo ">> rsync" "${args[@]}" "$src" "$dest" "${excludes[@]}" --log-file="$LOG_FILE"
-
-                # Run rsync
-                if [ "$dry" -ne 1 ]; then
-                    rsync "${args[@]}" "$src" "$dest" "${excludes[@]}" --log-file="$LOG_FILE"
-                elif [ "$dry" -eq 1 ]; then
-                    rsync "${args[@]}" "$src" "$dest" "${excludes[@]}" --log-file="$LOG_FILE" --dry-run
-                fi
+                echo "==> rsync" "${args[@]}" "$src" "$dest" "${excludes[@]}" --log-file="$LOG_FILE" ${dry:+--dry-run}
+                rsync "${args[@]}" "$src" "$dest" "${excludes[@]}" --log-file="$LOG_FILE" ${dry:+--dry-run}
             fi
             code=$?
             args=()
