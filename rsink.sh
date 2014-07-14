@@ -82,7 +82,7 @@ detect_x() {
                 fail "$2 File or directory does not exist."
             fi ;;
         "m"*) # Mounted volume
-            if ! mount | grep "$2" > /dev/null; then
+            if ! df | grep "$2$" > /dev/null; then
                 warn "$2 not mounted. Skipping."
                 skip=1
             else
@@ -170,7 +170,7 @@ main() {
 
                 # Log file errors
                 if [ -n "$(grep "No space left on device (28)\|Result too large (34)" "$LOG_FILE")" ]; then
-                    warn "Not enough space on $volume"
+                    warn "Not enough space on $dest"
                 fi
                 rm "$LOG_FILE"
             fi
@@ -183,20 +183,19 @@ main() {
         elif [[ "$line" == "" && -z "$src" && -z "$dest" ]]; then # Empty line, no source or dest
             token=0
         else
-            (( token++ ))
+            token=$((token+1))
         fi
 
         if [[ "$token" -eq 1 && "$line" != "" ]]; then # Profile
             detect_x "f" "$PROFILES_DIRECTORY/$line"
-            profile="$PROFILES_DIRECTORY/$line"
-            profile "$profile"
+            profile_name="$PROFILES_DIRECTORY/$line"
+            profile "$PROFILES_DIRECTORY/$line"
         elif [ "$token" -eq 2 ]; then # Source
             detect_x "x" "$line"
             src="$line"
             args=("${args[@]/<source>/$src}") # Replace "<source>" with actual destination
         elif [ "$token" -eq 3 ]; then # Destination volume
             detect_x "m" "$line"
-            volume="$line"
             dest="$line"
         elif [[ "$token" -eq 4 && "$skip" -ne 1 ]]; then # Destination folder
             if [ "$line" != "." ]; then
@@ -233,7 +232,7 @@ PROFILES_DIRECTORY="$dir/profiles"
 LOG_FILE="log"
 
 # Options parsing
-dry=0
+# dry=0 (unset to dynamically add --dry-run in rsync call if $dry -eq 1)
 silent=0
 
 while : ; do

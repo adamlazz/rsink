@@ -3,6 +3,7 @@
 ## v0.2+dev
 * Bugfix: Use `#!/bin/bash` shebang line
 * Bugfix: Use `local` for local function variables
+* Bugfix: Look for exact match when detecting volume
 * Feature: `\n`-delimited `config` file
 * Feature: Options stored in array, not in a string
 * Feature: Skip destinations that are not mounted

@@ -1,6 +1,6 @@
 # rsink
 
-rsink is a Bash script for managing and executing backup and data transfer plans using `rsync`.
+rsink is a command line tool for managing and executing data transfer plans using `rsync`.
 
 ## Getting started
 
